@@ -1,9 +1,10 @@
 package processing;
 
+import processing.ColorMatcher.ColorMatchListener;
 import processing.core.PApplet;
 import processing.serial.*;
 
-public class Processing extends PApplet {
+public class Processing extends PApplet implements ColorMatchListener {
 
 	private Serial port;
 
@@ -11,17 +12,16 @@ public class Processing extends PApplet {
 
 	private int wRed, wGreen, wBlue, wClear;
 	private String hexColor = "ffffff";
-	
+
+	/** rgb color for debugging */
 	private RGB background = new RGB(0,0,0);
-	
-	YUV yuvTest = new YUV(new RGB(0,0,0));
-	
-	YUV yuvblue = new YUV(38, 103, 101);
-	YUV yuvgreen = new YUV(62, 121, 57);
-	YUV yuvorange = new YUV(160, 60, 34);
-	
-	YUV detected = null;
-	
+
+	private YUV detectedColor = new YUV(new RGB(0,0,0));
+
+	private ColorMatcher matcher;
+
+	private String matchDistanceInput = "0.5";
+
 	public static void main(String _args[]) {
 		PApplet.main(new String[] { processing.Processing.class.getName() });
 	}
@@ -30,8 +30,10 @@ public class Processing extends PApplet {
 	 * programm setup
 	 */
 	public void setup() {
+		matcher = new ColorMatcher(this);
+
 		size(200,200);
-		port = new Serial(this, "/dev/ttyACM2", 9600); //remember to replace COM20 with the appropriate serial port on your computer
+		port = new Serial(this, "/dev/ttyACM1", 9600); //remember to replace COM20 with the appropriate serial port on your computer
 	}
 
 	/**
@@ -39,6 +41,8 @@ public class Processing extends PApplet {
 	 */
 	public void draw() {
 		background((background.r * 255), (background.g * 255), (background.b * 255));
+		text(matchDistanceInput, 4, 180);
+
 		while (port.available() > 0) {
 			serialEvent(port.readChar());
 		}
@@ -48,23 +52,41 @@ public class Processing extends PApplet {
 		if(serial == '\n') {
 			if(buff.length() == 6){
 				background.set(buff);
-				yuvTest.set(background);
-				
-				if(yuvTest.distanceTo(yuvblue) < 0.05 && !yuvblue.equals(detected)){
-					System.out.println("blue detected");
-					detected = yuvblue;
-				} else if(yuvTest.distanceTo(yuvgreen) < 0.05 && !yuvgreen.equals(detected)){
-					System.out.println("green detected");
-					detected = yuvgreen;
-				} else if(yuvTest.distanceTo(yuvorange) < 0.05 && !yuvorange.equals(detected)){
-					System.out.println("orange detected");
-					detected = yuvorange;
-				}
+				detectedColor.set(background);
+				matcher.match(detectedColor);
 			}
 			buff = "";
 		} else {
 			buff += serial;
-//			System.out.println(buff);
+		}
+	}
+
+	@Override
+	public void onColorMatch(YUV color) {
+		System.out.println("Detected color " + ColorMatcher.colorMap.get(color));
+	}
+
+	public void keyReleased() {
+		if (key != CODED) {
+			switch(key) {
+			case BACKSPACE:
+				matchDistanceInput = matchDistanceInput.substring(0,max(0,matchDistanceInput.length()-1));
+				break;
+			case ENTER:
+			case RETURN:
+				// comment out the following two lines to disable line-breaks
+				try{
+					matcher.matchDistance = Float.parseFloat(matchDistanceInput);
+				} catch(NumberFormatException e){
+					
+				}
+				break;
+			case ESC:
+			case DELETE:
+				break;
+			default:
+				matchDistanceInput += key;
+			}
 		}
 	}
 }

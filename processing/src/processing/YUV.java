@@ -70,7 +70,8 @@ public class YUV {
 	 * @return
 	 */
 	public float distanceTo(YUV yuv){
-		return (float)Math.sqrt((u-yuv.u)*(u-yuv.u) + (v-yuv.v)*(v-yuv.v));
+//		return (float)Math.sqrt((u-yuv.u)*(u-yuv.u) + (v-yuv.v)*(v-yuv.v));
+		return (float)Math.sqrt((u-yuv.u)*(u-yuv.u) + (v-yuv.v)*(v-yuv.v) + (y-yuv.y)*(y-yuv.y));
 	}
 
 	public void set(RGB rgb){
