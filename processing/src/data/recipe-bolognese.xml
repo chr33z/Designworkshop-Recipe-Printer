@@ -1,11 +1,5 @@
-<!-- 
-
-This is an example recipe written in RecipeBook XML.
-
- -->
-
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN" "./recipebook.dtd">
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN" "./recipeprinter.dtd">
 <recipe>
 	<title>Pasta Sauce With Meat</title>
 
@@ -27,7 +21,7 @@ This is an example recipe written in RecipeBook XML.
 		<preptime>About one hour</preptime>
 		
 		<!-- time in milliseconds is just for processing reasons, so out printer can decide how long the preparation takes -->
-		<preptimeutc>About one hour</preptimeutc>
+		<preptimeutc>600000</preptimeutc>
 	</recipeinfo>
 
 	<ingredientlist>

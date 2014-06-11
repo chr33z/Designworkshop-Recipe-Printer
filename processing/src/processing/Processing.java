@@ -1,10 +1,14 @@
 package processing;
 
+import java.io.File;
 import processing.ColorMatcher.ColorMatchListener;
 import processing.core.PApplet;
 import processing.serial.*;
+import recipe.Recipe;
 
 public class Processing extends PApplet implements ColorMatchListener {
+
+	private static final boolean DRAW_COLOR_WINDOW = false;
 
 	private Serial port;
 
@@ -22,6 +26,8 @@ public class Processing extends PApplet implements ColorMatchListener {
 
 	private String matchDistanceInput = "0.05";
 
+	private File recipeDirectory = new File(new File(System.getProperty("user.dir")).getParentFile()+"/src/data");
+
 	public static void main(String _args[]) {
 		PApplet.main(new String[] { processing.Processing.class.getName() });
 	}
@@ -33,19 +39,23 @@ public class Processing extends PApplet implements ColorMatchListener {
 		matcher = new ColorMatcher(this);
 		matchDistanceInput = matcher.matchDistance + "";
 
-		size(200,200);
-		port = new Serial(this, "/dev/ttyACM1", 9600); //remember to replace COM20 with the appropriate serial port on your computer
+		Recipe.pickRecipe(new String[]{"meat"}, 1200000L);
+
+		//		size(200,200);
+		//		port = new Serial(this, "/dev/ttyACM1", 9600); //remember to replace COM20 with the appropriate serial port on your computer
 	}
 
 	/**
 	 * Main loop
 	 */
 	public void draw() {
-		background((background.r * 255), (background.g * 255), (background.b * 255));
-		text(matchDistanceInput, 4, 180);
+		if(DRAW_COLOR_WINDOW){
+			background((background.r * 255), (background.g * 255), (background.b * 255));
+			text(matchDistanceInput, 4, 180);
 
-		while (port.available() > 0) {
-			serialEvent(port.readChar());
+			while (port.available() > 0) {
+				serialEvent(port.readChar());
+			}
 		}
 	}
 
@@ -53,7 +63,6 @@ public class Processing extends PApplet implements ColorMatchListener {
 		if(serial == '\n') {
 			if(buff.length() == 6){
 				background.set(buff);
-//				System.out.println(background.toString());
 				detectedColor.set(background);
 				matcher.match(detectedColor);
 			}
@@ -80,7 +89,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 				try{
 					matcher.matchDistance = Float.parseFloat(matchDistanceInput);
 				} catch(NumberFormatException e){
-					
+
 				}
 				break;
 			case ESC:
