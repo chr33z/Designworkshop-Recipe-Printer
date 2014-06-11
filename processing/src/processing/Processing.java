@@ -20,7 +20,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 
 	private ColorMatcher matcher;
 
-	private String matchDistanceInput = "0.5";
+	private String matchDistanceInput = "0.05";
 
 	public static void main(String _args[]) {
 		PApplet.main(new String[] { processing.Processing.class.getName() });
@@ -31,6 +31,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 	 */
 	public void setup() {
 		matcher = new ColorMatcher(this);
+		matchDistanceInput = matcher.matchDistance + "";
 
 		size(200,200);
 		port = new Serial(this, "/dev/ttyACM1", 9600); //remember to replace COM20 with the appropriate serial port on your computer
@@ -52,6 +53,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 		if(serial == '\n') {
 			if(buff.length() == 6){
 				background.set(buff);
+//				System.out.println(background.toString());
 				detectedColor.set(background);
 				matcher.match(detectedColor);
 			}

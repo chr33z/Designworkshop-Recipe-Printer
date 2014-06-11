@@ -18,12 +18,16 @@ public class ColorMatcher {
 	static {
 		colorMap = new HashMap<YUV, String>();
 		colorMap.put(new YUV(38, 103, 101), "blue");
+		colorMap.put(new YUV(66, 84, 103), "darkblue");
 		colorMap.put(new YUV(62, 121, 57), "green");
-		colorMap.put(new YUV(160, 60, 34), "orange");
-		colorMap.put(new YUV(168, 51, 46), "red");
+		colorMap.put(new YUV(124, 88, 31), "yellow");
+		colorMap.put(new YUV(163, 60, 34), "orange");
+		colorMap.put(new YUV(172, 51, 46), "red");
+		colorMap.put(new YUV(145, 42, 74), "pink");
+		colorMap.put(new YUV(113, 67, 82), "violett");
 	}
 	
-	public float matchDistance = 0.05f;
+	public float matchDistance = 0.02f;
 	
 	private YUV previouslyMatched = null;
 	

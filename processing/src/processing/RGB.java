@@ -55,11 +55,15 @@ public class RGB {
 	
 	public void set(String hexString){
 		if(hexString.length() == 6){
-			r = Integer.parseInt(hexString.substring(0,2), 16) / 255f;
-			g = Integer.parseInt(hexString.substring(2,4), 16) / 255f;
-			b = Integer.parseInt(hexString.substring(4), 16) / 255f;
+			try{
+				r = Integer.parseInt(hexString.substring(0,2), 16) / 255f;
+				g = Integer.parseInt(hexString.substring(2,4), 16) / 255f;
+				b = Integer.parseInt(hexString.substring(4), 16) / 255f;
+			} catch(NumberFormatException e){
+				System.out.println("RGB: not a valid hex value " + hexString);
+			}
 		} else {
-			System.out.println("RGB: not a valid hex value");
+			System.out.println("RGB: not a valid hex value " + hexString);
 		}
 	}
 	
