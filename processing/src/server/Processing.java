@@ -1,26 +1,19 @@
-package processing;
+package server;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
-import processing.ColorMatcher.ColorMatchListener;
 import processing.core.PApplet;
 import processing.serial.*;
 import recipe.Recipe;
+import server.ColorMatcher.ColorMatchListener;
 
 public class Processing extends PApplet implements ColorMatchListener {
 
 	private static final long serialVersionUID = -5092376021673312150L;
-
-	private static final boolean DRAW_COLOR_WINDOW = true;
-
-	private static final boolean RECIPE_ONLY_MODE = false;
-
-	private static final String HANDSHAKE_IN_1 = "HELLO!";
-	private static final String HANDSHAKE_IN_2 = "GO!";
-	private static final String HANDSHAKE_OUT = "HUHU!";
-
-	private static Status status = Status.NOT_CONNECTED;
 
 	public static enum Status {
 		NOT_CONNECTED, IDLE, READING
@@ -29,14 +22,8 @@ public class Processing extends PApplet implements ColorMatchListener {
 	int screenDimension = 200;
 
 	private Serial port;
-
-	private int num_ports;
-
 	private String[] portList;
-
 	private boolean serialConnected = false;
-
-	private String buff = "";
 
 	/** rgb color for debugging */
 	private RGB background = new RGB(0,0,0);
@@ -45,16 +32,17 @@ public class Processing extends PApplet implements ColorMatchListener {
 
 	private ColorMatcher matcher;
 
-	private String matchDistanceInput = "0.05";
+	private String matchDistanceInput = "0.1";
 	
+	/** time when the last parsable input was received from the serial */
 	private long timeLastReceived = 0;
 
 	/** static path to data directory where all the recipes are stored */
 	private static File recipeDirectory = new File(new File(System.getProperty("user.dir")).getParentFile()+"/src/data");
-
-	public static void main(String _args[]) {
-		PApplet.main(new String[] { processing.Processing.class.getName() });
-	}
+	
+	public static void main(String args[]) {
+		   PApplet.main(new String[] { "--present", "Processing" });
+		} 
 
 	/**
 	 * programm setup
@@ -65,7 +53,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 		matcher = new ColorMatcher(this);
 		matchDistanceInput = matcher.matchDistance + "";
 
-		size(screenDimension, screenDimension);
+		size(200, 200);
 	}
 
 	/**
@@ -80,7 +68,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 				serialEvent(port.readStringUntil('\n'));
 			}
 			
-			if(timeLastReceived != 0 && System.currentTimeMillis() - timeLastReceived > 2000L){
+			if(timeLastReceived != 0 && System.currentTimeMillis() - timeLastReceived > 10000L){
 				System.out.println("Connection lost.");
 				resetConnection();
 			}
@@ -120,7 +108,10 @@ public class Processing extends PApplet implements ColorMatchListener {
 		if(file == null){
 			file = Recipe.pickRecipe(col, 1200000L, true);
 		}
+		
 		System.out.println(file);
+		
+		Recipe.printRecipe(port, file);
 	}
 
 	public void keyReleased() {
@@ -141,7 +132,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 			case TAB:
 				//				port.write("PRINT_LINE\n");
 				//				port.write("Das ist ein Teststring\n");
-				System.out.println(background.toString());
+				Recipe.printRecipe(port, new File(recipeDirectory, "recipe-chili.xml"));
 				break;
 			case ESC:
 			case DELETE:
@@ -202,8 +193,37 @@ public class Processing extends PApplet implements ColorMatchListener {
 	private void resetConnection(){
 		serialConnected = false;
 		timeLastReceived = 0;
+//		try {
+//			restartApplication();
+//		} catch (URISyntaxException | IOException e) {
+//			e.printStackTrace();
+//		}
+		
 //		port = findSerialPort();
+		/*
+		 * FIXME find the serial port again. Blocks thread, so no trivial task
+		 */
 		
 		System.err.println("Connect arduino and restart the app.");
+	}
+	
+	public void restartApplication() throws URISyntaxException, IOException
+	{
+	  final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+	  final File currentJar = new File(Processing.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+
+	  /* is it a jar file? */
+	  if(!currentJar.getName().endsWith(".jar"))
+	    return;
+
+	  /* Build command: java -jar application.jar */
+	  final ArrayList<String> command = new ArrayList<String>();
+	  command.add(javaBin);
+	  command.add("-jar");
+	  command.add(currentJar.getPath());
+
+	  final ProcessBuilder builder = new ProcessBuilder(command);
+	  builder.start();
+	  System.exit(0);
 	}
 }

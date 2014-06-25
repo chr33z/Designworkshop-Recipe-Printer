@@ -8,8 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import processing.serial.Serial;
+
 import nu.xom.Builder;
 import nu.xom.Document;
+import nu.xom.Node;
 import nu.xom.Nodes;
 import nu.xom.ParsingException;
 
@@ -18,6 +21,8 @@ public class Recipe {
 	private static File recipeDirectory = new File(new File(System.getProperty("user.dir")).getParentFile()+"/src/data");
 	
 	private static final Long TIME_MARGIN = 0L;
+	
+	private static final String DEL = "#";
 	
 	public static File pickRecipe(String[] tags, Long prepTime, boolean dontBePicky){
 		String[] recipeFiles = recipeDirectory.list(new FilenameFilter() {
@@ -111,8 +116,85 @@ public class Recipe {
 		}
 	}
 	
+	public static boolean printRecipe(Serial serial, File file){
+		if(file == null){
+			System.err.println("Recipe file is null.");
+			return false;
+		}
+		
+		try {
+			System.out.println("Parsing and printing recipe file "+file+"...");
+
+			Builder parser = new Builder();
+			Document doc = parser.build(file);
+			
+			printTitle(serial, doc.query("//title"));
+			printAuthor(serial, doc.query("//recipeinfo/author"));
+			printIngredients(serial, doc.query("//ingredientlist"));
+			printPreparation(serial, doc.query("//preparation"));
+			
+			return true;
+		}
+		catch (ParsingException ex) {
+			System.err.println("...the file can not be parsed. It may be malformed");
+			return false;
+		}
+		catch (IOException ex) {
+			System.err.println("...the file can not be read. Does the file exist?");
+			return false;
+		}
+	}
 	
+
+	private static void printTitle(Serial serial, Nodes nodes) {
+		if(nodes != null && nodes.size() > 0){
+			System.out.println(nodes.get(0).getValue());
+			serial.write("PRINT_LINE" + DEL + nodes.get(0).getValue() + DEL);
+		} else {
+			serial.write("PRINT_LINE" + DEL + "Unknown Meal" + DEL);
+		}
+	}
+
+	private static void printAuthor(Serial serial, Nodes nodes) {
+		if(nodes != null && nodes.size() > 0){
+			System.out.println(nodes.get(0).getValue());
+			serial.write("PRINT_LINE" + DEL + nodes.get(0).getValue() + DEL);
+		} else {
+			serial.write("PRINT_LINE" + DEL + "Unknown Author" + DEL);
+		}
+	}
 	
+	private static void printIngredients(Serial serial, Nodes nodes) {
+		if(nodes != null && nodes.size() > 0){
+			for (int i = 0; i < nodes.size(); i++) {
+				String ingredient = nodes.get(i).getValue();
+				ingredient = ingredient.trim().replaceAll(" +", " ");
+				ingredient = ingredient.replace("\n", "");
+				ingredient = ingredient.replace("\t", "");
+				
+				System.out.println(ingredient);
+				serial.write("PRINT_LINE" + DEL + ingredient + DEL);
+			}
+		} else {
+			serial.write("PRINT_LINE" + DEL + "Unknown Ingredients" + DEL);
+		}
+	}
+
+	private static void printPreparation(Serial serial, Nodes nodes) {
+		if(nodes != null && nodes.size() > 0){
+			String prepString = nodes.get(0).getValue();
+			prepString = prepString.trim().replaceAll(" +", " ");
+			prepString = prepString.trim().replace("\n", "");
+			prepString = prepString.replace("\t", "");
+			
+			System.out.println(prepString);
+			serial.write("PRINT_LINE" + DEL + prepString + DEL);
+		} else {
+			serial.write("PRINT_LINE" + DEL + "Unknown Author" + DEL);
+		}
+	}
+
+
 	/**
 	 * Datatype to store the main infos about a recipe that are necessary 
 	 * for the printer to decide on one

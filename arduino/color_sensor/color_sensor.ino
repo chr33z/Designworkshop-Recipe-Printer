@@ -22,6 +22,8 @@ byte gammatable[256];
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
 
 void setup() {
+  pinMode(13, OUTPUT);
+  
   Serial.begin(9600);
   
   while(!tcsFound()){
@@ -40,7 +42,7 @@ void setup() {
 
 void loop() {
   if(Serial.available()){
-   processInput(Serial.readStringUntil('\n'));
+   processInput(Serial.readStringUntil('#'));
   }
   
   uint16_t clear, red, green, blue;
@@ -71,7 +73,7 @@ void processInput(String input){
   Serial.print(input);
   
   if(input == "PRINT_LINE"){
-    printLine(Serial.readStringUntil('\n'));
+    printLine(Serial.readStringUntil('#'));
   }
 }
 
@@ -100,6 +102,13 @@ void establishConnection(){
 }
 
 void printLine(String string){
+  for(int i=0; i<string.length(); i++){
+   digitalWrite(13, HIGH);
+   delay(50);
+   digitalWrite(13, LOW);
+   delay(50);
+  }
+  
   printer.println(string);
 
   printer.sleep();      // Tell printer to sleep

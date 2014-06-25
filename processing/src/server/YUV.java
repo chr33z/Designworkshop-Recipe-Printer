@@ -1,4 +1,4 @@
-package processing;
+package server;
 
 /**
  * Color stored in YUV space.
