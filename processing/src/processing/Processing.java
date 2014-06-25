@@ -1,6 +1,8 @@
 package processing;
 
 import java.io.File;
+import java.util.List;
+
 import processing.ColorMatcher.ColorMatchListener;
 import processing.core.PApplet;
 import processing.serial.*;
@@ -8,14 +10,33 @@ import recipe.Recipe;
 
 public class Processing extends PApplet implements ColorMatchListener {
 
-	private static final boolean DRAW_COLOR_WINDOW = false;
+	private static final long serialVersionUID = -5092376021673312150L;
+
+	private static final boolean DRAW_COLOR_WINDOW = true;
+
+	private static final boolean RECIPE_ONLY_MODE = false;
+
+	private static final String HANDSHAKE_IN_1 = "HELLO!";
+	private static final String HANDSHAKE_IN_2 = "GO!";
+	private static final String HANDSHAKE_OUT = "HUHU!";
+
+	private static Status status = Status.NOT_CONNECTED;
+
+	public static enum Status {
+		NOT_CONNECTED, IDLE, READING
+	}
+
+	int screenDimension = 200;
 
 	private Serial port;
 
-	private String buff = "";
+	private int num_ports;
 
-	private int wRed, wGreen, wBlue, wClear;
-	private String hexColor = "ffffff";
+	private String[] portList;
+
+	private boolean serialConnected = false;
+
+	private String buff = "";
 
 	/** rgb color for debugging */
 	private RGB background = new RGB(0,0,0);
@@ -25,8 +46,11 @@ public class Processing extends PApplet implements ColorMatchListener {
 	private ColorMatcher matcher;
 
 	private String matchDistanceInput = "0.05";
+	
+	private long timeLastReceived = 0;
 
-	private File recipeDirectory = new File(new File(System.getProperty("user.dir")).getParentFile()+"/src/data");
+	/** static path to data directory where all the recipes are stored */
+	private static File recipeDirectory = new File(new File(System.getProperty("user.dir")).getParentFile()+"/src/data");
 
 	public static void main(String _args[]) {
 		PApplet.main(new String[] { processing.Processing.class.getName() });
@@ -36,45 +60,67 @@ public class Processing extends PApplet implements ColorMatchListener {
 	 * programm setup
 	 */
 	public void setup() {
+		port = findSerialPort();
+
 		matcher = new ColorMatcher(this);
 		matchDistanceInput = matcher.matchDistance + "";
 
-		Recipe.pickRecipe(new String[]{"meat"}, 1200000L);
-
-		//		size(200,200);
-		//		port = new Serial(this, "/dev/ttyACM1", 9600); //remember to replace COM20 with the appropriate serial port on your computer
+		size(screenDimension, screenDimension);
 	}
 
 	/**
 	 * Main loop
 	 */
 	public void draw() {
-		if(DRAW_COLOR_WINDOW){
+		if(serialConnected){
 			background((background.r * 255), (background.g * 255), (background.b * 255));
 			text(matchDistanceInput, 4, 180);
 
 			while (port.available() > 0) {
-				serialEvent(port.readChar());
+				serialEvent(port.readStringUntil('\n'));
 			}
+			
+			if(timeLastReceived != 0 && System.currentTimeMillis() - timeLastReceived > 2000L){
+				System.out.println("Connection lost.");
+				resetConnection();
+			}
+			
+			// periodically check if colors are matched
+			matcher.checkMatchedColors();
 		}
 	}
 
-	void serialEvent(char serial) {
-		if(serial == '\n') {
-			if(buff.length() == 6){
-				background.set(buff);
+	void serialEvent(String input) {
+		if(input != null && !input.equals("")) {
+			input = input.replace("\n", "");
+			
+			if(input.length() == 6){
+				background.set(input);
 				detectedColor.set(background);
 				matcher.match(detectedColor);
+				
+				// store last received time to determine timeout
+				timeLastReceived = System.currentTimeMillis();
 			}
-			buff = "";
-		} else {
-			buff += serial;
 		}
 	}
 
 	@Override
-	public void onColorMatch(YUV color) {
-		System.out.println("Detected color " + ColorMatcher.colorMap.get(color));
+	public void onColorMatch(List<YUV> colors) {
+		String[] col = new String[colors.size()];
+		for (int i = 0; i < col.length; i++) {
+			col[i] = ColorMatcher.colorMap.get(colors.get(i));
+		}
+
+		for (YUV c : colors) {
+			System.out.println(ColorMatcher.colorMap.get(c));
+		}
+
+		File file = Recipe.pickRecipe(col, 1200000L, false);
+		if(file == null){
+			file = Recipe.pickRecipe(col, 1200000L, true);
+		}
+		System.out.println(file);
 	}
 
 	public void keyReleased() {
@@ -92,12 +138,72 @@ public class Processing extends PApplet implements ColorMatchListener {
 
 				}
 				break;
+			case TAB:
+				//				port.write("PRINT_LINE\n");
+				//				port.write("Das ist ein Teststring\n");
+				System.out.println(background.toString());
+				break;
 			case ESC:
 			case DELETE:
+
 				break;
 			default:
 				matchDistanceInput += key;
 			}
 		}
+	}
+
+	private Serial findSerialPort(){
+		// save serial ports
+		portList = Serial.list();
+		
+		String input = "";
+		Serial currentPort = null;
+		if(Serial.list().length > 0 && !serialConnected){
+			while(!serialConnected){
+				for (int i = 0; i < portList.length; i++) {
+					try {
+						currentPort = new Serial(this, portList[i], 9600);
+					} catch(RuntimeException e){
+						// could not connect to serial
+						continue;
+					}
+					
+					if(currentPort.available() > 0){
+						System.out.println("Checking serial input...");
+						
+						input = currentPort.readStringUntil('\n');
+						if(input != null && !input.equals("")){
+							serialConnected = true;
+							System.out.println("Connected to serial: " + portList[i]);
+							return currentPort;
+						}
+					}
+				}
+				
+				try {
+					portList = Serial.list();
+				} catch(NullPointerException e){
+					// just skip this part for now
+				}
+				
+				try {
+					Thread.sleep(200L);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		System.err.println("Error: Did not find any serial ports.");
+		return null;
+	}
+	
+	private void resetConnection(){
+		serialConnected = false;
+		timeLastReceived = 0;
+//		port = findSerialPort();
+		
+		System.err.println("Connect arduino and restart the app.");
 	}
 }

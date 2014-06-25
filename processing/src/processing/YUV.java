@@ -33,6 +33,12 @@ public class YUV {
 		u = convMatrix[3] * rgb.r + convMatrix[4] * rgb.g + convMatrix[5] * rgb.b;
 		v = convMatrix[6] * rgb.r + convMatrix[7] * rgb.g + convMatrix[8] * rgb.b;
 	}
+	
+	public YUV(float y, float u, float v, boolean isYuv){
+		this.y = y;
+		this.u = u;
+		this.v = v;
+	}
 
 	public YUV(String hexString){
 		if(hexString.length() == 6){
@@ -73,11 +79,34 @@ public class YUV {
 //		return (float)Math.sqrt((u-yuv.u)*(u-yuv.u) + (v-yuv.v)*(v-yuv.v));
 		return (float)Math.sqrt((u-yuv.u)*(u-yuv.u) + (v-yuv.v)*(v-yuv.v) + (y-yuv.y)*(y-yuv.y));
 	}
+	
+	/**
+	 * Interpolate this color with another color
+	 * @param yuv
+	 * @return
+	 */
+	public YUV average(YUV yuv){
+		float ny = (y + yuv.y) / 2f;
+		float nu = (u + yuv.u) / 2f;
+		float nv = (v + yuv.v) / 2f;
+		
+		return new YUV(ny, nu, nv, true);
+	}
 
 	public void set(RGB rgb){
 		y = convMatrix[0] * rgb.r + convMatrix[1] * rgb.g + convMatrix[2] * rgb.b;
 		u = convMatrix[3] * rgb.r + convMatrix[4] * rgb.g + convMatrix[5] * rgb.b;
 		v = convMatrix[6] * rgb.r + convMatrix[7] * rgb.g + convMatrix[8] * rgb.b;
+	}
+	
+	public void set(float y, float u, float v, boolean isYuv){
+		this.y = y;
+		this.u = u;
+		this.v = v;
+	}
+	
+	public RGB getRGB(){
+		return new RGB(this);
 	}
 
 	public boolean equals(YUV yuv){

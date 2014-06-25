@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -18,7 +19,7 @@ public class Recipe {
 	
 	private static final Long TIME_MARGIN = 0L;
 	
-	public static File pickRecipe(String[] tags, Long prepTime){
+	public static File pickRecipe(String[] tags, Long prepTime, boolean dontBePicky){
 		String[] recipeFiles = recipeDirectory.list(new FilenameFilter() {
 			public boolean accept(File directory, String fileName) {
 				return fileName.endsWith(".xml");
@@ -40,19 +41,24 @@ public class Recipe {
 				}
 			}
 			
+			// simple throw out
+			if(tags.length != recipeDate.tags.length && dontBePicky){
+				continue;
+			}
+			
 			// check if preparation time is ok
 			if(prepTime < recipeDate.prepTime - TIME_MARGIN){
 				continue;
 			}
-			
 			recipes.add(file);
 		}
-		
-		for (File file : recipes) {
-			System.out.println("selected recipes: "+file);
+		try {
+			return recipes.get(new Random().nextInt(recipes.size()));
+		} catch(IndexOutOfBoundsException e){
+			return null;
+		} catch(IllegalArgumentException e){
+			return null;
 		}
-		
-		return null;
 	}
 
 	/**
@@ -63,7 +69,7 @@ public class Recipe {
 	 */
 	public static RecipeData parseRecipeData(File file){
 		try {
-			System.out.println("Parsing recipe file "+file+"...");
+//			System.out.println("Parsing recipe file "+file+"...");
 
 			Builder parser = new Builder();
 			Document doc = parser.build(file);
@@ -92,7 +98,7 @@ public class Recipe {
 				break;
 			}
 			
-			System.out.println("...done");
+//			System.out.println("...done");
 			return new RecipeData(tags, author, prepTime);
 		}
 		catch (ParsingException ex) {

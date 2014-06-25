@@ -1,57 +1,48 @@
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
 
-// Pick analog outputs, for the UNO these three work well
-// use ~560  ohm resistor between Red & Blue, ~1K for green (its brighter)
-#define redpin 3
-#define greenpin 5
-#define bluepin 6
-// for a common anode LED, connect the common pin to +5V
-// for common cathode, connect the common to ground
+#include "SoftwareSerial.h"
+// If you're using Arduino 23 or earlier, uncomment the next line:
+//#include "NewSoftSerial.h"
 
-// set to false if using a common cathode LED
-#define commonAnode true
+// printer libraries
+#include "Adafruit_Thermal.h"
+#include "adalogo.h"
+#include "adaqrcode.h"
+#include <avr/pgmspace.h>
+
+int printer_RX_Pin = 5;  // This is the green wire
+int printer_TX_Pin = 6;  // This is the yellow wire
+
+Adafruit_Thermal printer(printer_RX_Pin, printer_TX_Pin);
 
 // our RGB -> eye-recognized gamma color
 byte gammatable[256];
-
 
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
 
 void setup() {
   Serial.begin(9600);
-
-  if (tcs.begin()) {
-    
-  } else {
+  
+  while(!tcsFound()){
     Serial.println("No TCS34725 found ... check your connections");
-    while (1); // halt!
+    delay(1000);
   }
   
-  // use these three pins to drive an LED
-  pinMode(redpin, OUTPUT);
-  pinMode(greenpin, OUTPUT);
-  pinMode(bluepin, OUTPUT);
+  Serial.println("TCS34725 found");
   
-  // thanks PhilB for this gamma table!
-  // it helps convert RGB colors to what humans see
-  for (int i=0; i<256; i++) {
-    float x = i;
-    x /= 255;
-    x = pow(x, 2.5);
-    x *= 255;
-      
-    if (commonAnode) {
-      gammatable[i] = 255 - x;
-    } else {
-      gammatable[i] = x;      
-    }
-    //Serial.println(gammatable[i]);
-  }
+  //establishConnection();
+
+  pinMode(7, OUTPUT); digitalWrite(7, LOW); // To also work w/IoTP printer
+  printer.begin();
 }
 
 
 void loop() {
+  if(Serial.available()){
+   processInput(Serial.readStringUntil('\n'));
+  }
+  
   uint16_t clear, red, green, blue;
 
   tcs.setInterrupt(false);      // turn on LED
@@ -74,5 +65,78 @@ void loop() {
   Serial.print((int)g, HEX);
   Serial.print((int)b, HEX);
   Serial.print('\n');
+}
+
+void processInput(String input){
+  Serial.print(input);
+  
+  if(input == "PRINT_LINE"){
+    printLine(Serial.readStringUntil('\n'));
+  }
+}
+
+/** Check whether farb sensor is found */
+boolean tcsFound(){
+    if(tcs.begin()){
+      return true;
+    } else {
+      return false;
+    }
+}
+
+void establishConnection(){
+  while(Serial.available() == 0);
+  
+  if(Serial.available() > 0 && Serial.read() == 0){
+    Serial.print("HELLO!");
+    Serial.print('\n');
+  } 
+  
+  //while (Serial.available() == 0) { // wait until bytes arrive
+    Serial.print("HELLO!");
+    Serial.print('\n');
+    delay(300);
+  //}
+}
+
+void printLine(String string){
+  printer.println(string);
+
+  printer.sleep();      // Tell printer to sleep
+  printer.wake();       // MUST call wake() before printing again, even if reset
+  printer.setDefault(); // Restore printer to defaults
+}
+
+void printTestProgram(){
+  // Test inverse on & off
+  printer.inverseOn();
+  printer.println("Inverse ON");
+  printer.inverseOff();
+
+  // Test character double-height on & off
+  printer.doubleHeightOn();
+  printer.println("Double Height ON");
+  printer.doubleHeightOff();
+
+  // Set text justification (right, center, left) -- accepts 'L', 'C', 'R'
+  printer.justify('R');
+  printer.println("Right justified");
+  printer.justify('C');
+  printer.println("Center justified");
+  printer.justify('L');
+  printer.println("Left justified");
+
+  // Test more styles
+  printer.boldOn();
+  printer.println("Bold text");
+  printer.boldOff();
+
+  printer.underlineOn(); 
+  printer.println("Underlined text ");
+  printer.underlineOff();
+
+  printer.sleep();      // Tell printer to sleep
+  printer.wake();       // MUST call wake() before printing again, even if reset
+  printer.setDefault(); // Restore printer to defaults
 }
 
