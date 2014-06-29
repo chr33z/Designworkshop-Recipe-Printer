@@ -1,3 +1,5 @@
+#include <Adafruit_Thermal.h>
+
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
 
@@ -18,6 +20,8 @@ Adafruit_Thermal printer(printer_RX_Pin, printer_TX_Pin);
 
 // our RGB -> eye-recognized gamma color
 byte gammatable[256];
+
+boolean modePrint = true;
 
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
 
@@ -45,28 +49,30 @@ void loop() {
    processInput(Serial.readStringUntil('#'));
   }
   
-  uint16_t clear, red, green, blue;
-
-  tcs.setInterrupt(false);      // turn on LED
-
-  delay(25);  // takes 50ms to read 
+  if(modePrint){
+    uint16_t clear, red, green, blue;
   
-  tcs.getRawData(&red, &green, &blue, &clear);
-
-  tcs.setInterrupt(true);  // turn off LED
-
-  // Figure out some basic hex code for visualization
-  uint32_t sum = clear;
-  float r, g, b;
-  r = red; r /= sum;
-  g = green; g /= sum;
-  b = blue; b /= sum;
-  r *= 256; g *= 256; b *= 256;
+    tcs.setInterrupt(false);      // turn on LED
   
-  Serial.print((int)r, HEX);
-  Serial.print((int)g, HEX);
-  Serial.print((int)b, HEX);
-  Serial.print('\n');
+    delay(25);  // takes 50ms to read 
+    
+    tcs.getRawData(&red, &green, &blue, &clear);
+  
+    tcs.setInterrupt(true);  // turn off LED
+  
+    // Figure out some basic hex code for visualization
+    uint32_t sum = clear;
+    float r, g, b;
+    r = red; r /= sum;
+    g = green; g /= sum;
+    b = blue; b /= sum;
+    r *= 256; g *= 256; b *= 256;
+    
+    Serial.print((int)r, HEX);
+    Serial.print((int)g, HEX);
+    Serial.print((int)b, HEX);
+    Serial.print('\n');
+  }
 }
 
 void processInput(String input){
@@ -74,6 +80,18 @@ void processInput(String input){
   
   if(input == "PRINT_LINE"){
     printLine(Serial.readStringUntil('#'));
+  }
+  
+  if(input == "PRINT_FEED"){
+    printLineFeed(Serial.readStringUntil('#'));
+  }
+  
+  if(input == "MODE_PRINT"){
+    modePrint = true; 
+  }
+  
+  if(input == "MODE_SENSOR"){
+    modePrint = false; 
   }
 }
 
@@ -101,19 +119,18 @@ void establishConnection(){
   //}
 }
 
-void printLine(String string){
-  for(int i=0; i<string.length(); i++){
-   digitalWrite(13, HIGH);
-   delay(50);
-   digitalWrite(13, LOW);
-   delay(50);
-  }
-  
+void printLine(String string){  
   printer.println(string);
 
-  printer.sleep();      // Tell printer to sleep
-  printer.wake();       // MUST call wake() before printing again, even if reset
-  printer.setDefault(); // Restore printer to defaults
+  //printer.sleep();      // Tell printer to sleep
+  //printer.wake();       // MUST call wake() before printing again, even if reset
+  //printer.setDefault(); // Restore printer to defaults
+}
+
+void printLineFeed(String n){
+  const char * c = n.c_str();
+  
+  printer.feed(atoi(c));
 }
 
 void printTestProgram(){

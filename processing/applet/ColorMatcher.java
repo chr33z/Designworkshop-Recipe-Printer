@@ -13,12 +13,9 @@ public class ColorMatcher {
 	private static final long MAX_TIME = 1000L;
 
 	private long timeLastMatch = 0;
-	
-	boolean started = false;
 
 	/** when adding colors to queue, interpolate color if distance over this value */
-	private float maxColorDistance = 0.1f;
-	public float matchDistance = 0.05f;
+	private float maxColorDistance = 0.7f;
 
 	/** color buffer that hold the last detected colors */
 	private LinkedList<YUV> colors = new LinkedList<YUV>();
@@ -35,11 +32,13 @@ public class ColorMatcher {
 
 	static {
 		colorMap = new HashMap<YUV, String>();
-		colorMap.put(new YUV(180, 58, 50), "meat");
-		colorMap.put(new YUV(75, 113, 62), "vegetables");
-		colorMap.put(new YUV(125, 87, 35), "carbs");
+		colorMap.put(new YUV(154, 57, 43), "meat");
+		colorMap.put(new YUV(50, 131, 50), "vegetables");
+		colorMap.put(new YUV(53, 89, 97), "carbs");
+		//		colorMap.put(new YUV(81, 115, 53), "green");
 	}
 
+	public float matchDistance = 0.1f;
 
 	private YUV previouslyMatched = null;
 
@@ -73,6 +72,11 @@ public class ColorMatcher {
 				}		
 			}
 		}
+
+		//		if(bestMatch != null){
+		//			previouslyMatched = bestMatch;
+		//			listener.onColorMatch(bestMatch);
+		//		}
 		
 		if(bestMatch != null && bestMatch != previouslyMatched){
 			if(timeLastMatch == 0 || System.currentTimeMillis() - timeLastMatch < MAX_TIME){

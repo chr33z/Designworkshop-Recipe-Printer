@@ -36,6 +36,8 @@ public class Processing extends PApplet implements ColorMatchListener {
 	
 	/** time when the last parsable input was received from the serial */
 	private long timeLastReceived = 0;
+	
+	private boolean connectionLost = false;
 
 	/** static path to data directory where all the recipes are stored */
 	private static File recipeDirectory = new File(new File(System.getProperty("user.dir")).getParentFile()+"/src/data");
@@ -64,13 +66,16 @@ public class Processing extends PApplet implements ColorMatchListener {
 			background((background.r * 255), (background.g * 255), (background.b * 255));
 			text(matchDistanceInput, 4, 180);
 
-			while (port.available() > 0) {
+			while (port != null && port.available() > 0) {
 				serialEvent(port.readStringUntil('\n'));
 			}
 			
 			if(timeLastReceived != 0 && System.currentTimeMillis() - timeLastReceived > 10000L){
-				System.out.println("Connection lost.");
-				resetConnection();
+				if(!connectionLost){
+					System.out.println("Connection lost.");
+					connectionLost = true;
+				}
+//				resetConnection();
 			}
 			
 			// periodically check if colors are matched
@@ -114,6 +119,12 @@ public class Processing extends PApplet implements ColorMatchListener {
 		Recipe.printRecipe(port, file);
 	}
 
+	/*
+	 * Some keyboard bindings for testing
+	 * 
+	 * (non-Javadoc)
+	 * @see processing.core.PApplet#keyReleased()
+	 */
 	public void keyReleased() {
 		if (key != CODED) {
 			switch(key) {
@@ -132,7 +143,8 @@ public class Processing extends PApplet implements ColorMatchListener {
 			case TAB:
 				//				port.write("PRINT_LINE\n");
 				//				port.write("Das ist ein Teststring\n");
-				Recipe.printRecipe(port, new File(recipeDirectory, "recipe-chili.xml"));
+//				/port.write("PRINT_LINE#TEST");
+				System.out.println(background.toString());
 				break;
 			case ESC:
 			case DELETE:
@@ -191,8 +203,18 @@ public class Processing extends PApplet implements ColorMatchListener {
 	}
 	
 	private void resetConnection(){
+		port = null;
 		serialConnected = false;
 		timeLastReceived = 0;
+		
+		Thread connectThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				port = findSerialPort();
+			}
+		});
+		connectThread.start();
+		
 //		try {
 //			restartApplication();
 //		} catch (URISyntaxException | IOException e) {
@@ -204,7 +226,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 		 * FIXME find the serial port again. Blocks thread, so no trivial task
 		 */
 		
-		System.err.println("Connect arduino and restart the app.");
+//		System.err.println("Connect arduino and restart the app.");
 	}
 	
 	public void restartApplication() throws URISyntaxException, IOException

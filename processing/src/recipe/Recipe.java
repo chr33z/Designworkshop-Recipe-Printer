@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Random;
 
 import processing.serial.Serial;
-
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Node;
@@ -17,46 +16,46 @@ import nu.xom.Nodes;
 import nu.xom.ParsingException;
 
 public class Recipe {
-	
+
 	private static File recipeDirectory = new File(new File(System.getProperty("user.dir")).getParentFile()+"/src/data");
-	
+
 	private static final Long TIME_MARGIN = 0L;
-	
+
 	private static final String DEL = "#";
-	
+
 	public static File pickRecipe(String[] tags, Long prepTime, boolean dontBePicky){
 		String[] recipeFiles = recipeDirectory.list(new FilenameFilter() {
 			public boolean accept(File directory, String fileName) {
 				return fileName.endsWith(".xml");
 			}
 		});
-		
+
 		// all recipes that fit the constraints
 		List<File> recipes = new ArrayList<File>();
 
 		fileLoop:
-		for (String fileName : recipeFiles) {
-			File file = new File(recipeDirectory, fileName);
-			RecipeData recipeDate = parseRecipeData(file);
-			
-			// check if all tags are there
-			for (String tag : tags) {
-				if(!Arrays.asList(recipeDate.tags).contains(tag)){
-					continue fileLoop; // if tag is not in recipe than continue with next
+			for (String fileName : recipeFiles) {
+				File file = new File(recipeDirectory, fileName);
+				RecipeData recipeDate = parseRecipeData(file);
+
+				// check if all tags are there
+				for (String tag : tags) {
+					if(!Arrays.asList(recipeDate.tags).contains(tag)){
+						continue fileLoop; // if tag is not in recipe than continue with next
+					}
 				}
+
+				// simple throw out
+				if(tags.length != recipeDate.tags.length && dontBePicky){
+					continue;
+				}
+
+				// check if preparation time is ok
+				if(prepTime < recipeDate.prepTime - TIME_MARGIN){
+					continue;
+				}
+				recipes.add(file);
 			}
-			
-			// simple throw out
-			if(tags.length != recipeDate.tags.length && dontBePicky){
-				continue;
-			}
-			
-			// check if preparation time is ok
-			if(prepTime < recipeDate.prepTime - TIME_MARGIN){
-				continue;
-			}
-			recipes.add(file);
-		}
 		try {
 			return recipes.get(new Random().nextInt(recipes.size()));
 		} catch(IndexOutOfBoundsException e){
@@ -74,17 +73,17 @@ public class Recipe {
 	 */
 	public static RecipeData parseRecipeData(File file){
 		try {
-//			System.out.println("Parsing recipe file "+file+"...");
+			//			System.out.println("Parsing recipe file "+file+"...");
 
 			Builder parser = new Builder();
 			Document doc = parser.build(file);
-			
+
 			Nodes tagNodes = doc.query("//recipeinfo/tag");
 			String[] tags = new String[tagNodes.size()];
 			for (int i = 0; i < tagNodes.size(); i++) {
 				tags[i] = tagNodes.get(i).getValue();
 			}
-			
+
 			Nodes preTimeNodes = doc.query("//recipeinfo/preptimeutc");
 			Long prepTime = 0L;
 			for (int i = 0; i < preTimeNodes.size(); i++) {
@@ -95,15 +94,15 @@ public class Recipe {
 					System.err.println("Preparation time is not a valid number. Should be a number describing the milliseconds");
 				}
 			}
-			
+
 			Nodes authorNodes = doc.query("//recipeinfo/author");
 			String author = "";
 			for (int i = 0; i < authorNodes.size(); i++) {
 				author = authorNodes.get(i).getValue();
 				break;
 			}
-			
-//			System.out.println("...done");
+
+			//			System.out.println("...done");
 			return new RecipeData(tags, author, prepTime);
 		}
 		catch (ParsingException ex) {
@@ -115,24 +114,52 @@ public class Recipe {
 			return null;
 		}
 	}
-	
+
 	public static boolean printRecipe(Serial serial, File file){
 		if(file == null){
 			System.err.println("Recipe file is null.");
 			return false;
 		}
-		
+
 		try {
 			System.out.println("Parsing and printing recipe file "+file+"...");
 
 			Builder parser = new Builder();
 			Document doc = parser.build(file);
-			
-			printTitle(serial, doc.query("//title"));
-			printAuthor(serial, doc.query("//recipeinfo/author"));
-			printIngredients(serial, doc.query("//ingredientlist"));
-			printPreparation(serial, doc.query("//preparation"));
-			
+
+			try {
+				serial.write("MODE_PRINT#");
+				
+				serial.write("PRINT_FEED#5#");
+				// wait for serial to transmit data. Otherwise command is not processed by arduino
+				Thread.sleep(1000L);
+
+				printTitle(serial, doc.query("//title"));
+				Thread.sleep(1000L);
+				serial.write("PRINT_FEED#1#");
+				Thread.sleep(200L);
+
+				printAuthor(serial, doc.query("//recipeinfo/author"));
+				Thread.sleep(1000L);
+				serial.write("PRINT_FEED#3#");
+				Thread.sleep(200L);
+
+				printIngredients(serial, doc.query("//ingredientlist/ingredient"));
+				Thread.sleep(1000L);
+				serial.write("PRINT_FEED#3#");
+				Thread.sleep(200L);
+
+				printPreparation(serial, doc.query("//preparation"));
+				Thread.sleep(1000L);
+
+				serial.write("PRINT_FEED#7#");
+				
+				serial.write("MODE_SENSOR#");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			return true;
 		}
 		catch (ParsingException ex) {
@@ -144,7 +171,7 @@ public class Recipe {
 			return false;
 		}
 	}
-	
+
 
 	private static void printTitle(Serial serial, Nodes nodes) {
 		if(nodes != null && nodes.size() > 0){
@@ -158,22 +185,23 @@ public class Recipe {
 	private static void printAuthor(Serial serial, Nodes nodes) {
 		if(nodes != null && nodes.size() > 0){
 			System.out.println(nodes.get(0).getValue());
-			serial.write("PRINT_LINE" + DEL + nodes.get(0).getValue() + DEL);
+			serial.write("PRINT_LINE" + DEL + "by "+nodes.get(0).getValue() + DEL);
 		} else {
-			serial.write("PRINT_LINE" + DEL + "Unknown Author" + DEL);
+			serial.write("PRINT_LINE" + DEL + "by "+"Unknown Author" + DEL);
 		}
 	}
-	
-	private static void printIngredients(Serial serial, Nodes nodes) {
+
+	private static void printIngredients(Serial serial, Nodes nodes) throws InterruptedException {
 		if(nodes != null && nodes.size() > 0){
 			for (int i = 0; i < nodes.size(); i++) {
 				String ingredient = nodes.get(i).getValue();
-				ingredient = ingredient.trim().replaceAll(" +", " ");
+				ingredient = ingredient.replace("\t", " ");
 				ingredient = ingredient.replace("\n", "");
-				ingredient = ingredient.replace("\t", "");
-				
+				ingredient = ingredient.trim().replaceAll(" +", " ");
+
 				System.out.println(ingredient);
 				serial.write("PRINT_LINE" + DEL + ingredient + DEL);
+				Thread.sleep(1000L);
 			}
 		} else {
 			serial.write("PRINT_LINE" + DEL + "Unknown Ingredients" + DEL);
@@ -183,10 +211,10 @@ public class Recipe {
 	private static void printPreparation(Serial serial, Nodes nodes) {
 		if(nodes != null && nodes.size() > 0){
 			String prepString = nodes.get(0).getValue();
-			prepString = prepString.trim().replaceAll(" +", " ");
-			prepString = prepString.trim().replace("\n", "");
 			prepString = prepString.replace("\t", "");
-			
+			prepString = prepString.trim().replace("\n", "");
+			prepString = prepString.trim().replaceAll(" +", " ");
+
 			System.out.println(prepString);
 			serial.write("PRINT_LINE" + DEL + prepString + DEL);
 		} else {
@@ -206,11 +234,11 @@ public class Recipe {
 	public static class RecipeData {
 
 		private String[] tags;
-		
+
 		private String author;
-		
+
 		private Long prepTime;
-		
+
 		public RecipeData(String[] tags, String author, Long prepTime){
 			this.tags = tags;
 			this.author = author;
@@ -240,7 +268,7 @@ public class Recipe {
 		public void setPrepTime(Long prepTime) {
 			this.prepTime = prepTime;
 		}
-		
+
 		public String toString(){
 			String tagstrings = "[";
 			for (int i = 0; i < tags.length; i++) {
