@@ -124,4 +124,8 @@ public class YUV {
 	public String toString(){
 		return "["+y+","+u+","+v+"]";
 	}
+	
+	public YUV copy(){
+		return new YUV(y,u,v,true);
+	}
 }

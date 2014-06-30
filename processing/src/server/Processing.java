@@ -106,7 +106,7 @@ public class Processing extends PApplet implements ColorMatchListener {
 		}
 
 		for (YUV c : colors) {
-			System.out.println(ColorMatcher.colorMap.get(c));
+			System.out.println(ColorMatcher.colorMap.get(c).toUpperCase());
 		}
 
 		File file = Recipe.pickRecipe(col, 1200000L, false);

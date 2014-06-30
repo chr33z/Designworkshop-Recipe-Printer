@@ -20,6 +20,8 @@ public class Recipe {
 	private static File recipeDirectory = new File(new File(System.getProperty("user.dir")).getParentFile()+"/src/data");
 
 	private static final Long TIME_MARGIN = 0L;
+	
+	private static final boolean PRINT_MODE = false;
 
 	private static final String DEL = "#";
 
@@ -46,18 +48,20 @@ public class Recipe {
 				}
 
 				// simple throw out
-				if(tags.length != recipeDate.tags.length && dontBePicky){
+				if(tags.length != recipeDate.tags.length && !dontBePicky){
 					continue;
 				}
 
 				// check if preparation time is ok
-				if(prepTime < recipeDate.prepTime - TIME_MARGIN){
-					continue;
-				}
+//				if(prepTime < recipeDate.prepTime - TIME_MARGIN){
+//					continue;
+//				}
 				recipes.add(file);
 			}
 		try {
-			return recipes.get(new Random().nextInt(recipes.size()));
+			int randomRecipeIndex = new Random().nextInt(recipes.size());
+			System.out.println("Random index: " + randomRecipeIndex);
+			return recipes.get(randomRecipeIndex);
 		} catch(IndexOutOfBoundsException e){
 			return null;
 		} catch(IllegalArgumentException e){
@@ -128,33 +132,25 @@ public class Recipe {
 			Document doc = parser.build(file);
 
 			try {
-				serial.write("MODE_PRINT#");
+				print(serial, "MODE_PRINT#", 200);
 				
-				serial.write("PRINT_FEED#5#");
+				print(serial, "PRINT_FEED#5#", 200);
 				// wait for serial to transmit data. Otherwise command is not processed by arduino
-				Thread.sleep(1000L);
 
-				printTitle(serial, doc.query("//title"));
-				Thread.sleep(1000L);
-				serial.write("PRINT_FEED#1#");
-				Thread.sleep(200L);
+				printTitle(serial, doc.query("//title"), 1000L);
+				print(serial, "PRINT_FEED#1#", 200);
 
-				printAuthor(serial, doc.query("//recipeinfo/author"));
-				Thread.sleep(1000L);
-				serial.write("PRINT_FEED#3#");
-				Thread.sleep(200L);
+				printAuthor(serial, doc.query("//recipeinfo/author"), 1000L);
+				print(serial, "PRINT_FEED#3#", 200);
 
-				printIngredients(serial, doc.query("//ingredientlist/ingredient"));
-				Thread.sleep(1000L);
-				serial.write("PRINT_FEED#3#");
-				Thread.sleep(200L);
+				printIngredients(serial, doc.query("//ingredientlist/ingredient"), 1000L);
+				print(serial, "PRINT_FEED#3#", 200);
 
-				printPreparation(serial, doc.query("//preparation"));
-				Thread.sleep(1000L);
+				printPreparation(serial, doc.query("//preparation"), 1000L);
 
-				serial.write("PRINT_FEED#7#");
+				print(serial, "PRINT_FEED#7#", 200);
 				
-				serial.write("MODE_SENSOR#");
+				print(serial, "MODE_SENSOR#", 0);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -173,25 +169,25 @@ public class Recipe {
 	}
 
 
-	private static void printTitle(Serial serial, Nodes nodes) {
+	private static void printTitle(Serial serial, Nodes nodes, long ms) {
 		if(nodes != null && nodes.size() > 0){
 			System.out.println(nodes.get(0).getValue());
-			serial.write("PRINT_LINE" + DEL + nodes.get(0).getValue() + DEL);
+			print(serial, "PRINT_LINE" + DEL + nodes.get(0).getValue() + DEL, ms);
 		} else {
-			serial.write("PRINT_LINE" + DEL + "Unknown Meal" + DEL);
+			print(serial, "PRINT_LINE" + DEL + "Unknown Meal" + DEL, ms);
 		}
 	}
 
-	private static void printAuthor(Serial serial, Nodes nodes) {
+	private static void printAuthor(Serial serial, Nodes nodes, long ms) {
 		if(nodes != null && nodes.size() > 0){
 			System.out.println(nodes.get(0).getValue());
-			serial.write("PRINT_LINE" + DEL + "by "+nodes.get(0).getValue() + DEL);
+			print(serial, "PRINT_LINE" + DEL + "by "+nodes.get(0).getValue() + DEL, ms);
 		} else {
-			serial.write("PRINT_LINE" + DEL + "by "+"Unknown Author" + DEL);
+			print(serial, "PRINT_LINE" + DEL + "by "+"Unknown Author" + DEL, ms);
 		}
 	}
 
-	private static void printIngredients(Serial serial, Nodes nodes) throws InterruptedException {
+	private static void printIngredients(Serial serial, Nodes nodes, long ms) throws InterruptedException {
 		if(nodes != null && nodes.size() > 0){
 			for (int i = 0; i < nodes.size(); i++) {
 				String ingredient = nodes.get(i).getValue();
@@ -200,15 +196,14 @@ public class Recipe {
 				ingredient = ingredient.trim().replaceAll(" +", " ");
 
 				System.out.println(ingredient);
-				serial.write("PRINT_LINE" + DEL + ingredient + DEL);
-				Thread.sleep(1000L);
+				print(serial, "PRINT_LINE" + DEL + ingredient + DEL, ms);
 			}
 		} else {
-			serial.write("PRINT_LINE" + DEL + "Unknown Ingredients" + DEL);
+			print(serial, "PRINT_LINE" + DEL + "Unknown Ingredients" + DEL, ms);
 		}
 	}
 
-	private static void printPreparation(Serial serial, Nodes nodes) {
+	private static void printPreparation(Serial serial, Nodes nodes, long ms) {
 		if(nodes != null && nodes.size() > 0){
 			String prepString = nodes.get(0).getValue();
 			prepString = prepString.replace("\t", "");
@@ -216,12 +211,28 @@ public class Recipe {
 			prepString = prepString.trim().replaceAll(" +", " ");
 
 			System.out.println(prepString);
-			serial.write("PRINT_LINE" + DEL + prepString + DEL);
+			print(serial, "PRINT_LINE" + DEL + prepString + DEL, ms);
 		} else {
-			serial.write("PRINT_LINE" + DEL + "Unknown Author" + DEL);
+			print(serial, "PRINT_LINE" + DEL + "Unknown Author" + DEL, ms);
 		}
 	}
 
+	/**
+	 * Sends data to the printer, has a conditional for PRINT_MODE and a
+	 * parameter that holds the thread for some ms after printing
+	 * @param serial
+	 * @param string
+	 */
+	private static void print(Serial serial, String string, long ms){
+		if(PRINT_MODE){
+			serial.write(string);
+			try {
+				Thread.sleep(ms);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	/**
 	 * Datatype to store the main infos about a recipe that are necessary 

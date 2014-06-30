@@ -11,6 +11,8 @@ public class ColorMatcher {
 	private static final int QUEUE_LENGTH = 10;
 
 	private static final long MAX_TIME = 1000L;
+	
+	private static final boolean SCANNING_MODE = false;
 
 	private long timeLastMatch = 0;
 	
@@ -18,7 +20,7 @@ public class ColorMatcher {
 
 	/** when adding colors to queue, interpolate color if distance over this value */
 	private float maxColorDistance = 0.1f;
-	public float matchDistance = 0.05f;
+	public float matchDistance = 0.06f;
 
 	/** color buffer that hold the last detected colors */
 	private LinkedList<YUV> colors = new LinkedList<YUV>();
@@ -38,6 +40,7 @@ public class ColorMatcher {
 		colorMap.put(new YUV(180, 58, 50), "meat");
 		colorMap.put(new YUV(75, 113, 62), "vegetables");
 		colorMap.put(new YUV(125, 87, 35), "carbs");
+		colorMap.put(new YUV(63, 127, 52), "light-green");
 	}
 
 
@@ -57,32 +60,76 @@ public class ColorMatcher {
 	 * @param color
 	 */
 	public void match(YUV color){
-		addColorToQueue(color);
-
-		YUV bestMatch = null;
-
-		for (Entry<YUV, String> entry : colorMap.entrySet()) {
-			if(color.distanceTo(entry.getKey()) < matchDistance){
-				if(bestMatch == null){
-					bestMatch = entry.getKey();
-				} else {
-					if(color.distanceTo(entry.getKey()) < 
-							color.distanceTo(bestMatch)){
+		if(SCANNING_MODE){
+			scanColor(color);
+		} else {
+			addColorToQueue(color);
+	
+			YUV bestMatch = null;
+	
+			for (Entry<YUV, String> entry : colorMap.entrySet()) {
+				if(color.distanceTo(entry.getKey()) < matchDistance){
+					if(bestMatch == null){
 						bestMatch = entry.getKey();
-					}
-				}		
+					} else {
+						if(color.distanceTo(entry.getKey()) < 
+								color.distanceTo(bestMatch)){
+							bestMatch = entry.getKey();
+						}
+					}		
+				}
 			}
-		}
-		
-		if(bestMatch != null && bestMatch != previouslyMatched){
-			if(timeLastMatch == 0 || System.currentTimeMillis() - timeLastMatch < MAX_TIME){
-				previouslyMatched = bestMatch;
-				timeLastMatch = System.currentTimeMillis();
-				matched.add(bestMatch);
+			
+			if(bestMatch != null && bestMatch != previouslyMatched){
+				if(timeLastMatch == 0 || System.currentTimeMillis() - timeLastMatch < MAX_TIME){
+					previouslyMatched = bestMatch;
+					timeLastMatch = System.currentTimeMillis();
+					matched.add(bestMatch);
+				}
 			}
 		}
 	}
 	
+	long scanStart = 0;
+	YUV neutral = null;
+	YUV averagedColor = null;
+	List<YUV> scannedColors = new ArrayList<YUV>();
+	float scanDistance = 0.1f;
+	
+	private void scanColor(YUV color) {
+		if(scanStart == 0){
+			scanStart = System.currentTimeMillis();
+		}
+		
+		if(System.currentTimeMillis() - scanStart < 3000){
+			if(neutral == null){
+				neutral = color.copy();
+			} else {
+				neutral = color.average(neutral);
+			}
+		} else {
+			if(color.distanceTo(neutral) > scanDistance){
+				scannedColors.add(color.copy());
+				
+				float y = 0;
+				float u = 0;
+				float v = 0;
+				int n = 0;;
+				for (YUV c : scannedColors) {
+					y += c.y;
+					u += c.u;
+					v += c.v;
+					n++;
+				}
+				
+				averagedColor = new YUV(y / (float)n, u / (float)n, v / (float)n, true);
+				
+				System.out.println("Scanned: " +color.getRGB().toString());
+				System.out.println("Averaged: " +averagedColor.getRGB().toString());
+			}
+		}
+	}
+
 	public void checkMatchedColors(){
 		if(matched.size() > 0 && System.currentTimeMillis() - timeLastMatch > MAX_TIME){
 			listener.onColorMatch(matched);
