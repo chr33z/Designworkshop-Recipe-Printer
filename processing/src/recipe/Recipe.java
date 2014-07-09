@@ -21,7 +21,7 @@ public class Recipe {
 
 	private static final Long TIME_MARGIN = 0L;
 	
-	private static final boolean PRINT_MODE = false;
+	private static final boolean PRINT_MODE = true;
 
 	private static final String DEL = "#";
 
@@ -148,9 +148,9 @@ public class Recipe {
 
 				printPreparation(serial, doc.query("//preparation"), 1000L);
 
-				print(serial, "PRINT_FEED#7#", 200);
+				print(serial, "PRINT_FEED#7#", 1000);
 				
-				print(serial, "MODE_SENSOR#", 0);
+				print(serial, "MODE_SENSOR#", 200);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -11,11 +11,11 @@ public class ColorMatcher {
 	private static final int QUEUE_LENGTH = 10;
 
 	private static final long MAX_TIME = 1000L;
-	
+
 	private static final boolean SCANNING_MODE = false;
 
 	private long timeLastMatch = 0;
-	
+
 	boolean started = false;
 
 	/** when adding colors to queue, interpolate color if distance over this value */
@@ -26,6 +26,13 @@ public class ColorMatcher {
 	private LinkedList<YUV> colors = new LinkedList<YUV>();
 
 	ColorMatchListener listener;
+	
+	// fields for scanning the neutral color
+	private long scanStart = 0;
+	private YUV neutral = null;
+	private YUV averagedColor = null;
+	private List<YUV> scannedColors = new ArrayList<YUV>();
+	private float scanDistance = 0.1f;
 
 	public interface ColorMatchListener {
 
@@ -46,7 +53,11 @@ public class ColorMatcher {
 
 	private YUV previouslyMatched = null;
 
+	/** contains all matched colors including neutral values */
 	private List<YUV> matched = new ArrayList<YUV>();
+	
+	/** includes all matched colors without neutral values */
+	private List<YUV> matchedStripped = new ArrayList<YUV>();
 
 	public ColorMatcher(ColorMatchListener listener){
 		this.listener = listener;
@@ -63,10 +74,17 @@ public class ColorMatcher {
 		if(SCANNING_MODE){
 			scanColor(color);
 		} else {
+			// detect neutral color first
+			if(neutral == null){
+				findNeutralColor(color);
+				return;
+			}
+			
+			// if neutral is found then proceed with matching colors
 			addColorToQueue(color);
-	
+
 			YUV bestMatch = null;
-	
+
 			for (Entry<YUV, String> entry : colorMap.entrySet()) {
 				if(color.distanceTo(entry.getKey()) < matchDistance){
 					if(bestMatch == null){
@@ -79,7 +97,7 @@ public class ColorMatcher {
 					}		
 				}
 			}
-			
+
 			if(bestMatch != null && bestMatch != previouslyMatched){
 				if(timeLastMatch == 0 || System.currentTimeMillis() - timeLastMatch < MAX_TIME){
 					previouslyMatched = bestMatch;
@@ -89,18 +107,13 @@ public class ColorMatcher {
 			}
 		}
 	}
-	
-	long scanStart = 0;
-	YUV neutral = null;
-	YUV averagedColor = null;
-	List<YUV> scannedColors = new ArrayList<YUV>();
-	float scanDistance = 0.1f;
-	
+
 	private void scanColor(YUV color) {
 		if(scanStart == 0){
 			scanStart = System.currentTimeMillis();
 		}
-		
+
+		// find neutral color
 		if(System.currentTimeMillis() - scanStart < 3000){
 			if(neutral == null){
 				neutral = color.copy();
@@ -110,7 +123,7 @@ public class ColorMatcher {
 		} else {
 			if(color.distanceTo(neutral) > scanDistance){
 				scannedColors.add(color.copy());
-				
+
 				float y = 0;
 				float u = 0;
 				float v = 0;
@@ -121,18 +134,44 @@ public class ColorMatcher {
 					v += c.v;
 					n++;
 				}
-				
+
 				averagedColor = new YUV(y / (float)n, u / (float)n, v / (float)n, true);
-				
+
 				System.out.println("Scanned: " +color.getRGB().toString());
 				System.out.println("Averaged: " +averagedColor.getRGB().toString());
 			}
 		}
 	}
 
+	private void findNeutralColor(YUV color){
+		if(scanStart == 0){
+			scanStart = System.currentTimeMillis();
+		}
+
+		// find neutral color
+		if(System.currentTimeMillis() - scanStart < 3000){
+			if(neutral == null){
+				neutral = color.copy();
+			} else {
+				neutral = color.average(neutral);
+			}
+		} else {
+			colorMap.put(neutral, "neutral");
+		}
+	}
+
 	public void checkMatchedColors(){
 		if(matched.size() > 0 && System.currentTimeMillis() - timeLastMatch > MAX_TIME){
-			listener.onColorMatch(matched);
+			matchedStripped.clear();
+			
+			// remove all neutral colors from matched list
+			for (YUV matchedColor : matched) {
+				if(!matchedColor.equals(neutral)){
+					matchedStripped.add(matchedColor);
+				}
+			}
+			
+			listener.onColorMatch(matchedStripped);
 			matched.clear();
 			timeLastMatch = 0;
 			previouslyMatched = null;
