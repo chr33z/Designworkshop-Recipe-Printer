@@ -11,19 +11,24 @@ from colormatcher import *
 from Adafruit_Thermal import *
  
 #init
-#printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
+printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 
-#bus = smbus.SMBus(1)
+bus = smbus.SMBus(1)
 
 # I2C address 0x29
 # Register 0x12 has device ver. 
 # Register addresses must be OR'ed with 0x80
-#bus.write_byte(0x29,0x80|0x12)
-#ver = bus.read_byte(0x29)
-ver = 0x55;
-# version # should be 0x44
+
+
+# UNCOMMENT NEXT TWO LINES FOR SERIAL ACCESS
+bus.write_byte(0x29,0x80|0x12)
+ver = bus.read_byte(0x29)
+#ver = 0x55;
+#version # should be 0x44
+
 if ver == 0x44:
     
+    # init color matcher
     colorMatcher = ColorMatcher()
     
     print('Device found\n')
@@ -44,13 +49,21 @@ if ver == 0x44:
         print(crgb)
         
         # match color
-        colorMatcher.match(YUV(red, green, blue))
+        # all matching is done in YUV color space because of distance function
+        
+        scannedColor = YUV(0,0,0)
+        scannedColor.setcolorRGBv(red, green, blue) #takes values from 0-1
+        # scannedColor.setcolorRGBvint(red, green, blue) #takes values from 0-255
+        colorMatcher.match(scannedColor)
         
         # get list of matched colors, if null there are none
         matched = colorMatcher.checkMatchedColors()
         
-        if matched != null:
-            print("hullu!")
+        if matched != None:
+            #iterate over color dictionary (key, value)
+            for color, tag in matched:
+                print(tag)
+            
             # find recipe here
             # print recipe here
         
@@ -58,9 +71,27 @@ if ver == 0x44:
 
 elif ver == 0x55:
     #for testing the color things
-    
-    colorMatcher = ColorMatcher()
-    colorMatcher.match(YUV(179, 56, 51))
+    #rgb1 = RGB.fromFloat(0.1, 1.0, 0.5)
+    #print(rgb1.toString())
+    #
+    #rgb1 = RGB(255, 0, 0)
+    #print(rgb1.toString())
+    #
+    #rgb1 = RGB.fromYUV(YUV(1,0.5,0.5))
+    #print(rgb1.toString())
+    #
+    #yuv = YUV(1.0,0.5,0.5)
+    #print(yuv.toString())
+    #
+    #yuv = YUV.fromFloatRgb(0,1,0)
+    #print(yuv.getRGB().toString())
+    #
+    #yuv = YUV.fromIntRgb(0,255,0)
+    #print(yuv.getRGB().toString())
+    #
+    ## init color matcher
+    #colorMatcher = ColorMatcher()
+    #colorMatcher.match(YUV.fromIntRgb(180, 58, 50))
 
 else: 
     print("Device not found\n")

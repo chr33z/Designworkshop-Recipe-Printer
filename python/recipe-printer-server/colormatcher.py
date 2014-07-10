@@ -12,14 +12,13 @@ class ColorMatcher:
 
     timeLastMatch = 0 # last time a match was found
 
-    # when adding colors to queue, interpolate color if distance over this value */
-    maxColorDistance = 0.1;
-    matchDistance = 0.06;
+    # maxColorDistance = 0.1; # not needed; 
+    matchDistance = 0.06; # color distance to color in the colormap
 
     # color buffer that hold the last detected colors */
     colors = [];
     
-    # fields for scanning the neutral color
+    # fields for scanning
     scanStart = 0;
     neutral = None; # neutral YUV color
     averagedColor = None; # neutral YUV color
@@ -28,9 +27,9 @@ class ColorMatcher:
     
     # colormap holding predefined colors to match
     colorMap = dict({
-        YUV(180, 58, 50) : "meat",
-        YUV(125, 87, 35) : "vegetables",
-        YUV(63, 127, 52) : "carbs"
+        YUV.fromIntRgb(180, 58, 50) : "meat",
+        YUV.fromIntRgb(125, 87, 35) : "vegetables",
+        YUV.fromIntRgb(63, 127, 52) : "carbs"
     })
 
     # previously matched YUV color
@@ -47,40 +46,47 @@ class ColorMatcher:
             scanColor(color)
         else:
             # detect neutral color first
-            # if self.neutral == None:
-                #findNeutralColor(color);
-                #return;
+            if self.colorMap[neutral] == None:
+                # find neutral color; this takes 3000 ms
+                findNeutralColor(color);
+                return;
 
             # if neutral is found then proceed with matching colors
             #addColorToQueue(color);
 
-            bestMatch = None; # bset color match: YUV
+            bestMatch = None; # best color match: YUV
 
-            # loop over color map
+            # loop over color map to find matches
             for targetColor in self.colorMap:
+                # see if the distance from the scanned color to the colorMap is small enough
                 if color.distanceTo(targetColor) < self.matchDistance:
                     if bestMatch == None:
                         bestMatch = targetColor
-                    else:
+                    else: # if we have multiple matches, only take the best one (smalles distance)
                         if color.distanceTo(targetColor) < color.distanceTo(bestMatch):
                             bestMatch = targetColor
     
                 # only match color if it was not recognized before and max scanning time was not reached
+                # since we also detect neutral color a list could look like this:
+                # red - neutral - red - neutral - green
                 if bestMatch != None and bestMatch != self.previouslyMatched:
+                    # only add color to the matched colors list if the last matching time was not
+                    # more than MAX_TIME ago
                     if self.timeLastMatch == 0 or int(time.time()) - self.timeLastMatch < self.MAX_TIME:
                         self.previouslyMatched = bestMatch
-                        self.timeLastMatch = int(time.time())
+                        self.timeLastMatch = int(time.time()) # save time of this match
                         self.matched.append(bestMatch)
                         print("matched")
 
-    #scan YUV color
+    # scan a single YUV color
+    # the first 1000 ms of the scanning process the neutral color is found
+    # Insert the marble multiple times to form an average value
     def scanColor(self, color):
         
         if self.scanStart == 0:
             self.scanStart = int(time.time())
             
-            
-        if int(time.time.py) - self.scanStart < 3000:
+        if int(time.time.py) - self.scanStart < 1000:
             if self.neutral == None:
                 self.neutral = color.copy()
             else:
@@ -99,25 +105,32 @@ class ColorMatcher:
                     u += c.u
                     v += c.v
                     n += 1.0
-                    
-                self.averagedColor = YUV().setcolorYUVv(y / n, u / n, v / n)  
+                
+                if self.averagedColor == None:
+                    self.averagedColor = YUV(0,0,0)
+                
+                self.averagedColor = YUV(y / n, u / n, v / n)  
             
-                print("Scanned: " +color.toString())
-                print("Averaged: " +averagedColor.toString())
+                print("Scanned: " +color.getRGB().toString())
+                print("Averaged: " +averagedColor.getRGB().toString())
 
     # find the neutral color: YUV
+    # takes 3000 ms
     def findNeutralColor(color):
         if self.scanStart == 0:
             self.scanStart = int(time.time())
             
-            
-        if int(time.time.py) - self.scanStart < 3000:
+        if int(time.time.py) - self.scanStart < 1000: # average neutral color
             if self.neutral == None:
                 self.neutral = color.copy()
             else:
                 self.neutral = color.average(self.neutral)
+        else:
+            colorMap[self.neutral] = "neutral" # add neutral color to colormap
 
-    # call this function periodically to check id a scanning process is over
+    # call this function periodically to check if a scanning process is over
+    # returns null if no scanning is done and no colors are detected
+    # returns all matched colors with the neutral color filtered out
     def checkMatchedColors():
         if len(self.matched) > 0 and int(time.time()) - self.timeLastMatch > self.MAX_TIME:
             self.matchedStripped[:] = []
@@ -127,9 +140,12 @@ class ColorMatcher:
                 if c.equals(self.neutral):
                     self.matchedStripped.append(c)
             
+            result = matched
+            
+            # reset values
             self.matched[:] = []
             self.timeLastMatch = 0
             self.previouslyMatched = None
-            return self.matched
+            return result
         else:
             return None
