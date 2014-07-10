@@ -27,9 +27,10 @@ class ColorMatcher:
     
     # colormap holding predefined colors to match
     colorMap = dict({
-        YUV.fromIntRgb(180, 58, 50) : "meat",
-        YUV.fromIntRgb(125, 87, 35) : "vegetables",
-        YUV.fromIntRgb(63, 127, 52) : "carbs"
+        YUV.fromIntRgb(138, 64, 52) : "meat",
+        YUV.fromIntRgb(89, 94, 61) : "vegetables",
+        YUV.fromIntRgb(115, 85, 39) : "carbs"
+        YUV.fromIntRgb(69, 85, 88) : "person"
     })
 
     # previously matched YUV color
