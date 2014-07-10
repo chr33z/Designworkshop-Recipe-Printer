@@ -66,29 +66,30 @@ if ver == 0x44:
         
         time.sleep(0.05)
 
-elif ver == 0x55:
-    #for testing the color things
-    #rgb1 = RGB.fromFloat(0.1, 1.0, 0.5)
-    #print(rgb1.toString())
-    #
-    #rgb1 = RGB(255, 0, 0)
-    #print(rgb1.toString())
-    #
-    #rgb1 = RGB.fromYUV(YUV(1,0.5,0.5))
-    #print(rgb1.toString())
-    #
-    #yuv = YUV(1.0,0.5,0.5)
-    #print(yuv.toString())
-    #
-    #yuv = YUV.fromFloatRgb(0,1,0)
-    #print(yuv.getRGB().toString())
-    #
-    #yuv = YUV.fromIntRgb(0,255,0)
-    #print(yuv.getRGB().toString())
-    #
-    ## init color matcher
-    #colorMatcher = ColorMatcher()
-    #colorMatcher.match(YUV.fromIntRgb(180, 58, 50))
+# elif ver == 0x55:
+#     #for testing the color things
+#     rgb1 = RGB.fromFloat(0.1, 1.0, 0.5)
+#     print(rgb1.toString())
+    
+#     rgb1 = RGB(255, 0, 0)
+#     print(rgb1.toString())
+    
+#     rgb1 = RGB.fromYUV(YUV(1,0.5,0.5))
+#     print(rgb1.toString())
+    
+#     yuv = YUV(1.0,0.5,0.5)
+#     print(yuv.toString())
+    
+#     yuv = YUV.fromFloatRgb(0,1,0)
+#     print(yuv.getRGB().toString())
+    
+#     yuv = YUV.fromIntRgb(0,255,0)
+#     print(yuv.getRGB().toString())
+    
+#     # init color matcher
+#     colorMatcher = ColorMatcher()
+#     colorMatcher.match(YUV.fromIntRgb(180, 58, 50))
 
-else: 
+else:
     print("Device not found\n")
+
