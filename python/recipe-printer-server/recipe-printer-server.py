@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-
+from __future__ import division
 import smbus
 import time
 import math
@@ -39,9 +39,9 @@ if ver == 0x44:
     while True:
         data = bus.read_i2c_block_data(0x29, 0)
         clear = data[1] << 8 | data[0]
-        red = data[3] << 8 | data[2] # divide by clear should give us a range from 0 - 1
-        green = data[5] << 8 | data[4]
-        blue = data[7] << 8 | data[6]
+        red = (data[3] << 8 | data[2]) / clear  * 255 # division by clear should give us a range from 0 - 1
+        green = (data[5] << 8 | data[4]) / clear * 255
+        blue = (data[7] << 8 | data[6]) / clear * 255
         
         # print color result
         crgb = "C: %s, R: %s, G: %s, B: %s\n" % (clear, red, green, blue)
