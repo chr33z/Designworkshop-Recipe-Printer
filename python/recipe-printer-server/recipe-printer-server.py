@@ -77,10 +77,14 @@ if ver == 0x44:
             # find recipe here
             matchingRecipes = findRecipe(tags)
 
-            # select random recipe from list
-            recipeToPrint = random.choice(matchingRecipes)
-            # print recipe here
-            printRecipe(recipeToPrint)
+            if matchingRecipes is None:
+                printer.println("Sorry, I couldn't find any recipes matching your requirements :(")
+                printer.feed(2)
+            else:
+                # select random recipe from list
+                recipeToPrint = random.choice(matchingRecipes)
+                # print recipe here
+                printRecipe(recipeToPrint)
 
         time.sleep(0.05)
 
@@ -131,8 +135,10 @@ def findRecipe(tags):
 
         if completeMatches:
             return completeMatches
-        if minusOneMatches:
+        elif minusOneMatches:
             return minusOneMatches
+        else:
+            return None
 
 def printRecipe(recipePath):
     recipeDOM = parse(recipePath)
