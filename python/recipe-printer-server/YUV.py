@@ -86,9 +86,9 @@ class YUV(object):
             return false
         
         if self.y == yuv.y and self.u == yuv.u and self.v == yuv.v:
-            return true
+            return True
         else:
-            return false
+            return False
         
     def toString(self):
         return "["+str(self.y)+","+str(self.u)+","+str(self.v)+"]"

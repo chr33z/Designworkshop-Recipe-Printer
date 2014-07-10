@@ -50,7 +50,7 @@ if ver == 0x44:
         # match color
         # all matching is done in YUV color space because of distance function
         
-        colorMatcher.match(YUV.fromFloatRgb(red, green, blue))
+        colorMatcher.match(YUV.fromIntRgb(red, green, blue))
         
         # get list of matched colors, if null there are none
         matched = colorMatcher.checkMatchedColors()
