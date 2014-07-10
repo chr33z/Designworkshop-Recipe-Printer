@@ -6,14 +6,14 @@ from YUV import *
 from RGB import *
 
 class ColorMatcher:
-    MAX_TIME = 1000 # max waiting time for scanner
+    MAX_TIME = 1 # max waiting time for scanner
     
     SCANNING_MODE = False # set true to scan marbles
 
     timeLastMatch = 0 # last time a match was found
 
     # maxColorDistance = 0.1; # not needed; 
-    matchDistance = 0.06; # color distance to color in the colormap
+    matchDistance = 0.15; # color distance to color in the colormap
 
     # color buffer that hold the last detected colors */
     colors = [];
@@ -29,7 +29,7 @@ class ColorMatcher:
     colorMap = dict({
         YUV.fromIntRgb(138, 64, 52) : "meat",
         YUV.fromIntRgb(89, 94, 61) : "vegetables",
-        YUV.fromIntRgb(115, 85, 39) : "carbs"
+        YUV.fromIntRgb(115, 85, 39) : "carbs",
         YUV.fromIntRgb(69, 85, 88) : "person"
     })
 
@@ -44,7 +44,7 @@ class ColorMatcher:
     
     def match(self, color):
         if self.SCANNING_MODE:
-            scanColor(color)
+            self.scanColor(color)
         else:
             # detect neutral color first
             if not self.colorMap.has_key("neutral"):
@@ -83,11 +83,12 @@ class ColorMatcher:
     # the first 1000 ms of the scanning process the neutral color is found
     # Insert the marble multiple times to form an average value
     def scanColor(self, color):
-        
+	print("in scanColor, y:" + str(color.y) + " u:"+ str(color.u) + " v:"+ str(color.v))
+	print("scanstart:" + str(self.scanStart) + " timediff:" + str(time.time() - self.scanStart))
         if self.scanStart == 0:
             self.scanStart = int(time.time())
             
-        if int(time.time()) - self.scanStart < 1000:
+        elif int(time.time()) - self.scanStart < 1:
             if self.neutral == None:
                 self.neutral = color.copy()
             else:
@@ -113,21 +114,21 @@ class ColorMatcher:
                 self.averagedColor = YUV(y / n, u / n, v / n)  
             
                 print("Scanned: " +color.getRGB().toString())
-                print("Averaged: " +averagedColor.getRGB().toString())
+                print("Averaged: " + self.averagedColor.getRGB().toString())
 
     # find the neutral color: YUV
     # takes 3000 ms
     def findNeutralColor(self, color):
-        if self.scanStart == 0:
+	if self.scanStart == 0:
             self.scanStart = int(time.time())
             
-        if int(time.time()) - self.scanStart < 1000: # average neutral color
+        if int(time.time()) - self.scanStart < 1: # average neutral color
             if self.neutral == None:
                 self.neutral = color.copy()
             else:
                 self.neutral = color.average(self.neutral)
         else:
-            colorMap[self.neutral] = "neutral" # add neutral color to colormap
+            self.colorMap[self.neutral] = "neutral" # add neutral color to colormap
 
     # call this function periodically to check if a scanning process is over
     # returns null if no scanning is done and no colors are detected
