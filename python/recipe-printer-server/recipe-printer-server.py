@@ -57,6 +57,9 @@ if ver == 0x44:
         
         if matched != None:
             #iterate over color dictionary (key, value)
+            print("WE FOUND A FUCKING COLOR!")
+            print("WE FOUND A FUCKING COLOR!")
+            print("WE FOUND A FUCKING COLOR!")
             for color, tag in matched:
                 print(tag)
             
