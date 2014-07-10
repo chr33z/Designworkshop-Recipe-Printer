@@ -6,14 +6,14 @@ from YUV import *
 from RGB import *
 
 class ColorMatcher:
-    MAX_TIME = 1 # max waiting time for scanner
+    MAX_TIME = 3 # max waiting time for scanner
     
     SCANNING_MODE = False # set true to scan marbles
 
     timeLastMatch = 0 # last time a match was found
 
     # maxColorDistance = 0.1; # not needed; 
-    matchDistance = 0.04; # color distance to color in the colormap
+    matchDistance = 0.06; # color distance to color in the colormap
 
     # color buffer that hold the last detected colors */
     colors = [];
@@ -77,9 +77,6 @@ class ColorMatcher:
                         self.previouslyMatched = bestMatch
                         self.timeLastMatch = int(time.time()) # save time of this match
                         self.matched.append(bestMatch)
-                        print("matched")
-			for color in self.matched:
-			    print("matched color:" + str(self.colorMap.get(bestMatch)))
 
     # scan a single YUV color
     # the first 1000 ms of the scanning process the neutral color is found
@@ -137,14 +134,8 @@ class ColorMatcher:
     # returns all matched colors with the neutral color filtered out
     def checkMatchedColors(self):
         if len(self.matched) > 0 and int(time.time()) - self.timeLastMatch > self.MAX_TIME:
-            self.matchedStripped[:] = []
-            
             #remove all neutral colors from matched list
-            for c in self.matched:
-                if c.equals(self.neutral):
-                    self.matchedStripped.append(c)
-            
-            result = self.matched
+            result = filter(lambda x: not x.equals(self.neutral), self.matched)
             
             # reset values
             self.matched[:] = []

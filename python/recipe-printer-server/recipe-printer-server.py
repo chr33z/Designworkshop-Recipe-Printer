@@ -45,7 +45,7 @@ if ver == 0x44:
         
         # print color result
         crgb = "C: %s, R: %s, G: %s, B: %s\n" % (clear, red, green, blue)
-        print(crgb)
+        #print(crgb)
         
         # match color
         # all matching is done in YUV color space because of distance function
@@ -57,11 +57,8 @@ if ver == 0x44:
         
         if matched != None:
             #iterate over color dictionary (key, value)
-            print("WE FOUND A FUCKING COLOR!")
-            print("WE FOUND A FUCKING COLOR!")
-            print("WE FOUND A FUCKING COLOR!")
-            for color, tag in matched:
-                print(tag)
+            for color in matched:
+                print("found " + colorMatcher.colorMap.get(color))
             
             # find recipe here
             # print recipe here
