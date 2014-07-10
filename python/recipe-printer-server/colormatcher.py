@@ -46,9 +46,9 @@ class ColorMatcher:
             scanColor(color)
         else:
             # detect neutral color first
-            if self.colorMap[neutral] == None:
+            if not self.colorMap.has_key("neutral"):
                 # find neutral color; this takes 3000 ms
-                findNeutralColor(color);
+                self.findNeutralColor(color);
                 return;
 
             # if neutral is found then proceed with matching colors
@@ -86,7 +86,7 @@ class ColorMatcher:
         if self.scanStart == 0:
             self.scanStart = int(time.time())
             
-        if int(time.time.py) - self.scanStart < 1000:
+        if int(time.time()) - self.scanStart < 1000:
             if self.neutral == None:
                 self.neutral = color.copy()
             else:
@@ -116,11 +116,11 @@ class ColorMatcher:
 
     # find the neutral color: YUV
     # takes 3000 ms
-    def findNeutralColor(color):
+    def findNeutralColor(self, color):
         if self.scanStart == 0:
             self.scanStart = int(time.time())
             
-        if int(time.time.py) - self.scanStart < 1000: # average neutral color
+        if int(time.time()) - self.scanStart < 1000: # average neutral color
             if self.neutral == None:
                 self.neutral = color.copy()
             else:
@@ -131,7 +131,7 @@ class ColorMatcher:
     # call this function periodically to check if a scanning process is over
     # returns null if no scanning is done and no colors are detected
     # returns all matched colors with the neutral color filtered out
-    def checkMatchedColors():
+    def checkMatchedColors(self):
         if len(self.matched) > 0 and int(time.time()) - self.timeLastMatch > self.MAX_TIME:
             self.matchedStripped[:] = []
             
