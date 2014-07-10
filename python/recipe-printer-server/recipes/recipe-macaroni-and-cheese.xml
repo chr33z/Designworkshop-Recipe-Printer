@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN"
+"./recipeprinter.dtd">
+
+<!-- Sample recipe in recipebook xml format. be sure to use the right dtd 
+	file located at ./recipeprinter.dtd And do not place any xml comments om 
+	front of the xml tag! -->
+
+<recipe>
+	<title>Homestyle Macaroni And Cheese</title>
+
+	<recipeinfo>
+		<tag>carbs</tag>
+
+		<blurb>Way better than the orange stuff that comes in a box.</blurb>
+
+		<genre>Comfort food</genre>
+
+		<author>David Horton</author>
+
+		<source>
+			Loosely based upon a recipe from the
+			<hyperlink url="http://www.shermanhospital.com/">Sherman Hospital</hyperlink>
+			cafeteria in Elgin, IL
+		</source>
+
+		<yield>6 servings</yield>
+
+		<preptime>45 minutes</preptime>
+	</recipeinfo>
+
+	<ingredientlist>
+		<ingredient>
+			<quantity>8</quantity>
+			<unit>oz.</unit>
+			<fooditem>elbow
+				macaroni</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>6</quantity>
+			<unit>Tbsp.</unit>
+			<fooditem>butter</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1/4</quantity>
+			<unit>C.</unit>
+			<fooditem>flour</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>2</quantity>
+			<unit>C.</unit>
+			<fooditem>milk</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>4</quantity>
+			<unit>oz.</unit>
+			<fooditem>cream
+				cheese</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1/2</quantity>
+			<unit>tsp.</unit>
+			<fooditem>salt</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1/8</quantity>
+			<unit>lb.</unit>
+			<fooditem>baby Swiss
+				cheese slices</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1/4</quantity>
+			<unit>lb.</unit>
+			<fooditem>colby or
+				mild cheddar cheese slices</fooditem>
+		</ingredient>
+	</ingredientlist>
+
+	<preparation>
+		Preheat
+		<equipment>oven</equipment>
+		to 450 F. Cook macaroni
+		until it is almost tender. Drain and rinse thorougly with cold water. Melt
+		butter in a
+		<equipment>3-quart saucepan</equipment>
+		over medium-low heat.
+		Slowly add flour, stiring constantly, to make a roux. When roux begins to
+		darken in color slowly add the milk and keep stiring even though it
+		may feel
+		as if your arm will fall off at any minute. Add cream cheese and salt
+		stirring until the sauce has a smooth and creamy texture. Fold
+		macaroni into
+		the sauce. Place 1/3 of the macaroni and sauce mixture into a buttered
+		<equipment>8 x 8 inch pan</equipment>
+		. Top with a layer of cheddar cheese
+		slices. Scoop another 1/3 of the macaroni mixture into the pan. Top with
+		baby Swiss slices. Add the remaining macaroni mixture to the pan and top
+		with the last of the cheddar slices. Bake at 450 for 15 minutes or
+		until top
+		begins to brown.
+	</preparation>
+
+	<serving>Serve alone or with a thick slice of smoked ham. Refrigerate
+		leftovers immediately.</serving>
+
+	<notes>It is very important to avoid aged cheeses as these tend to make
+		the
+		sauce gritty. Sharp cheddar or Swiss will ruin the texture.</notes>
+</recipe>

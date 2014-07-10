@@ -1,0 +1,82 @@
+<!--
+
+This dtd was originally created by David Horton and taken from
+http://www.happy-monkey.net/recipebook/recipebook.dtd.
+
+It is modified to fit our needs. We added the <tag> element to define
+categories for each recipe and a <pretimeutc> element to add a time in milliseconds
+to the xml (this is for processing reasons only).
+
+
+Original License:
+
+RecipeXML - An XML recipe markup language.
+
+Copyright (C) 2005 David Horton
+This work is licensed under the Creative Commons Attribution Share-Alike
+license.  See http://creativecommons.org/licenses/by/2.0/ for details.
+
+-->
+
+
+<!-- === Hyperlinks for URL references === -->
+
+<!ELEMENT hyperlink (#PCDATA)>
+<!ATTLIST hyperlink url CDATA #REQUIRED>
+
+
+<!-- === Information about a recipe === -->
+
+<!ELEMENT tag (#PCDATA)>
+<!ELEMENT author (#PCDATA)>
+<!ELEMENT blurb (#PCDATA)>
+<!ELEMENT effort (#PCDATA)>
+<!ELEMENT genre (#PCDATA)>
+<!ELEMENT preptime (#PCDATA)>
+<!ELEMENT preptimeutc (#PCDATA)>
+<!ELEMENT source (#PCDATA|hyperlink)*>
+<!ELEMENT yield (#PCDATA)>
+
+
+<!-- === Lists of ingredients === -->
+
+<!ELEMENT fooditem (#PCDATA)>
+<!ELEMENT quantity (#PCDATA)>
+<!ELEMENT unit (#PCDATA)>
+<!-- FIXME? The mixed-content definition below does not enforce one and
+     only one instance of the tags quantity, unit and fooditem. -->
+<!ELEMENT ingredient (#PCDATA | quantity | unit | fooditem)*>
+
+
+<!-- === Elements of preparation === -->
+
+<!ELEMENT equipment (#PCDATA | hyperlink)*>
+<!ELEMENT step (#PCDATA | equipment | hyperlink)*>
+
+
+<!-- === The main elements of a recipe === -->
+
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT recipeinfo (author | blurb | effort | genre | preptime | source | yield | tag | preptimeutc)*>
+<!ELEMENT ingredientlist (ingredient)*>
+<!ELEMENT preparation (#PCDATA | equipment | step | hyperlink)*>
+<!ELEMENT serving (#PCDATA | hyperlink)*>
+<!ELEMENT notes (#PCDATA | hyperlink)*>
+
+
+<!-- === And finally, the recipe itself === -->
+
+<!ELEMENT recipe (title, recipeinfo?, ingredientlist, preparation, serving?, notes?)>
+
+
+<!-- === The following elements provide logical groupings of recipes === -->
+
+
+<!-- === A section provides logical divisions of a cookbook === -->
+
+<!ELEMENT section (title, recipe+)>
+
+
+<!-- === A cookbook consists of one or more recipes or sections === -->
+
+<!ELEMENT cookbook (title, (section | recipe)+)>

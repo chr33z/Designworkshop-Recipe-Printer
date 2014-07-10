@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN" "./recipeprinter.dtd">
+<recipe>
+	<title>Vegetable Stir Fry with Chicken</title>
+
+	<recipeinfo>
+	    <!-- some example tags to use -->
+	    <tag>vegetables</tag>
+	    <tag>meat</tag>
+	    
+	    <author>Picassos</author>
+
+		<preptime>About one hour</preptime>
+		
+		<!-- time in milliseconds is just for processing reasons, so out printer can decide how long the preparation takes -->
+		<preptimeutc>1800000</preptimeutc>
+	</recipeinfo>
+
+	<ingredientlist>
+		<ingredient>
+			<quantity>600</quantity>
+			<unit>gr.</unit>
+			<fooditem>chicken breast</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>2</quantity>
+			<unit>tbs.</unit>
+			<fooditem>olive oil</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>250</quantity>
+			<unit>ml.</unit>
+			<fooditem>vegetable stock</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>medium sized</unit>
+			<fooditem>onion</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>2</quantity>
+			<fooditem>garlic cloves</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>2</quantity>
+			<fooditem>paprica</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>150</quantity>
+			<unit>gr.</unit>
+			<fooditem>zucchini</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>100</quantity>
+			<unit>gr.</unit>
+			<fooditem>carots</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>200</quantity>
+			<unit>gr.</unit>
+			<fooditem>champignions</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>200</quantity>
+			<unit>gr.</unit>
+			<fooditem>sour creme</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>75</quantity>
+			<unit>gr.</unit>
+			<fooditem>creme fraiche</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>glass</unit>
+			<fooditem>red wine</fooditem>
+		</ingredient>
+		
+		<ingredient>
+			<fooditem>basil</fooditem>
+		</ingredient>
+		
+		<ingredient>
+			<fooditem>thyme</fooditem>
+		</ingredient>
+		
+		<ingredient>
+			<fooditem>italian spices</fooditem>
+		</ingredient>
+	</ingredientlist>
+
+	<preparation>
+		In a
+		<equipment>3-quart saucepan</equipment>
+		sweat garlic and
+		celery in olive oil over medium-low heat. Add ground beef and raise heat to
+		brown slightly. Drain fat if necessary. Add crushed tomatoes, spices,
+		sugar
+		and salt. Lower heat to a slow simmer and add cheese. Cook for at least
+		30
+		minutes, much longer if possible.
+	</preparation>
+
+	<serving>Serve over spaghetti or any other favorite pasta.</serving>
+
+	<notes>Make a double batch and freeze the leftover sauce for a quick
+		meal
+		later on.</notes>
+</recipe>

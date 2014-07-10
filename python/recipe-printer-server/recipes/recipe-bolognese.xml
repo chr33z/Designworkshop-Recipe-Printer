@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN" "./recipeprinter.dtd">
+<recipe>
+	<title>Pasta Sauce With Meat</title>
+
+	<recipeinfo>
+	    <!-- some example tags to use -->
+	    <tag>meat</tag>
+	    <tag>carbs</tag>
+	    
+	    <author>I'm the author</author>
+		<blurb>A good all-around meat sauce to use with a variety of pasta
+			dishes.</blurb>
+
+		<genre>Comfort food</genre>
+
+		<author>David Horton</author>
+
+		<yield>Makes enough for 2 lbs. of pasta.</yield>
+
+		<preptime>About one hour</preptime>
+		
+		<!-- time in milliseconds is just for processing reasons, so out printer can decide how long the preparation takes -->
+		<preptimeutc>600000</preptimeutc>
+	</recipeinfo>
+
+	<ingredientlist>
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>tsp.</unit>
+			<fooditem>olive
+				oil</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>3</quantity>
+			<unit>cloves</unit>
+			<fooditem>garlic</fooditem>
+			, minced
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>rib</unit>
+			<fooditem>celery</fooditem>
+			, finely chopped
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>lb.</unit>
+			<fooditem>lean ground
+				beef</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>One</quantity>
+			<unit>28 oz. can</unit>
+			<fooditem>crushed tomatoes</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>One</quantity>
+			<unit>6 oz. can</unit>
+			<fooditem>tomato paste</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>tsp.</unit>
+			<fooditem>Italian
+				seasoning</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>tsp.</unit>
+			<fooditem>sweet
+				basil</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1 1/2</quantity>
+			<unit>tsp.</unit>
+			<fooditem>brown
+				sugar</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1/2</quantity>
+			<unit>tsp.</unit>
+			<fooditem>kosher
+				salt</fooditem>
+		</ingredient>
+
+		<ingredient>
+			A
+			<quantity>pinch</quantity>
+			of
+			<fooditem>crushed red
+				pepper</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1/4</quantity>
+			<unit>C.</unit>
+			<fooditem>grated
+				Romano cheese</fooditem>
+		</ingredient>
+	</ingredientlist>
+
+	<preparation>
+		In a
+		<equipment>3-quart saucepan</equipment>
+		sweat garlic and
+		celery in olive oil over medium-low heat. Add ground beef and raise heat to
+		brown slightly. Drain fat if necessary. Add crushed tomatoes, spices,
+		sugar
+		and salt. Lower heat to a slow simmer and add cheese. Cook for at least
+		30
+		minutes, much longer if possible.
+	</preparation>
+
+	<serving>Serve over spaghetti or any other favorite pasta.</serving>
+
+	<notes>Make a double batch and freeze the leftover sauce for a quick
+		meal
+		later on.</notes>
+</recipe>
