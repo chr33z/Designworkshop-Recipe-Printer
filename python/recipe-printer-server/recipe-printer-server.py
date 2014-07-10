@@ -3,9 +3,12 @@ from __future__ import division
 import smbus
 import time
 import math
+import random
+import glob
 from YUV import *
 from RGB import *
 from colormatcher import *
+from xml.dom.minidom import parse
 
 #printer
 from Adafruit_Thermal import *
@@ -56,13 +59,29 @@ if ver == 0x44:
         matched = colorMatcher.checkMatchedColors()
         
         if matched != None:
-            #iterate over color dictionary (key, value)
+            tags = []
+            peopleCount = 0
+            #iterate over matched colors
             for color in matched:
                 print("found " + colorMatcher.colorMap.get(color))
+                #ensures that persons aren't added to the tags
+                if colorMatcher.colorMap.get(color) == "person":
+                    peopleCount++
+                else:
+                    #don't add duplicate category-tags
+                    if colorMatcher.colorMap.get(color) == tag:
+                        break
+                    else:
+                        tags.append(colorMatcher.colorMap.get(color))        
             
             # find recipe here
+            matchingRecipes = findRecipe(tags)
+
+            # select random recipe from list
+            recipeToPrint = random.choice(matchingRecipes)
             # print recipe here
-        
+            printRecipe(recipeToPrint)
+
         time.sleep(0.05)
 
 # elif ver == 0x55:
@@ -92,3 +111,58 @@ if ver == 0x44:
 else:
     print("Device not found\n")
 
+def findRecipe(tags):
+    completeMatches = []
+    minusOneMatches = []
+
+    
+    for filePath in glob.glob(recipes/*.xml):
+        recipeDOM = parse(filePath)
+        taglist = recipeDOM.getElementsByTagName("tag")
+        print(taglist)
+        #compare, get number of matches
+        commonTags = set(taglist) & set(tags)
+        #distribute to lists according to matches
+        difference = len(tags) - len(commonTags)
+        if difference == 0:
+            completeMatches.append(filePath)
+        elif difference == 1:
+            minusOneMatches.append(filePath)
+
+        if completeMatches:
+            return completeMatches
+        if minusOneMatches:
+            return minusOneMatches
+
+def printRecipe(recipePath):
+    recipeDOM = parse(recipePath)
+
+    #print title
+    title = recipeDOM.getElementsByTagName("title").nodeValue
+
+    printer.doubleHeightOn()
+    printer.println(title)
+    printer.doubleHeightOff()
+    printer.feed(1)
+
+    #print blurb + author
+    blurb = recipeDOM.getElementsByTagName("blurb").nodeValue
+    author = recipeDOM.getElementsByTagName("author").nodeValue
+
+    printer.println(blurb + ' by ' + author)
+    printer.feed(1)
+
+    printer.boldOn()
+    printer.println("Ingredients")
+    printer.boldOff()
+
+    for ingredient in recipeDOM.getElementsByTagName("ingredient"):
+        printer.println(ingredient.nodeValue)
+
+    printer.feed(1)
+    printer.boldOn()
+    printer.println("Preparation")
+    printer.boldOff()
+
+    printer.println(recipeDOM.getElementsByTagName("preparation"))
+    
