@@ -12,7 +12,6 @@ from Adafruit_Thermal import *
  
 #init
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
-
 bus = smbus.SMBus(1)
 
 # I2C address 0x29
@@ -39,10 +38,10 @@ if ver == 0x44:
     # main loop for reading colors
     while True:
         data = bus.read_i2c_block_data(0x29, 0)
-        clear = clear = data[1] << 8 | data[0]
-        red = (data[3] << 8 | data[2]) / clear # divide by clear should give us a range from 0 - 1
-        green = (data[5] << 8 | data[4]) / clear
-        blue = (data[7] << 8 | data[6]) / clear
+        clear = data[1] << 8 | data[0]
+        red = data[3] << 8 | data[2] # divide by clear should give us a range from 0 - 1
+        green = data[5] << 8 | data[4]
+        blue = data[7] << 8 | data[6]
         
         # print color result
         crgb = "C: %s, R: %s, G: %s, B: %s\n" % (clear, red, green, blue)
