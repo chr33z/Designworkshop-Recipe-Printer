@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN" "./recipeprinter.dtd">
+<recipe>
+	<title>Vegetable Stir Fry</title>
+
+	<recipeinfo>
+	    <!-- some example tags to use -->
+	    <tag>vegetables</tag>
+	    
+	    <author>björk</author>
+
+		<yield>Makes enough for 2 portions.</yield>
+
+		<preptime>About one hour</preptime>
+		
+		<!-- time in milliseconds is just for processing reasons, so out printer can decide how long the preparation takes -->
+		<preptimeutc>1500000</preptimeutc>
+	</recipeinfo>
+
+	<ingredientlist>
+		<ingredient>
+			<quantity>1</quantity>
+			<fooditem>red onion</fooditem>
+		</ingredient>
+		
+		<ingredient>
+			<quantity>1</quantity>
+			<fooditem>white onion</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<fooditem>egg plant</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>4</quantity>
+			<fooditem>tomatoes</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>100</quantity>
+			<unit>gr.</unit>
+			<fooditem>coconut milk</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>tbs.</unit>
+			<fooditem>crushed tomatoes</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>3</quantity>
+			<unit>tbs.</unit>
+			<fooditem>olive oil</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>piece</unit>
+			<fooditem>garlic</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<unit>tsp.</unit>
+			<fooditem>sweet
+				basil</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			<fooditem>paprica</fooditem>
+		</ingredient>
+	</ingredientlist>
+
+	<preparation>
+		Zwiebeln in grobe Stücke schneiden, Knoblauch fein hacken, Aubergine (und Paprika) in Stücke schneiden und salzen, Tomaten achteln, Kokoscreme in einem Becher heißem Wasser auflösen.
+		Zwiebeln und Currypaste in heißem Öl in der Pfanne anbraten. Auberginen dazu, kurz anbraten lassen. Dann die aufgelöste Kokoscreme dazu. Nach einer Weile die Tomaten dazugeben und das ganze gar schmoren lassen. Dazu Reis. 
+	</preparation>
+</recipe>
