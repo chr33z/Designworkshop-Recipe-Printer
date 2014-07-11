@@ -20,7 +20,10 @@ def findRecipe(tags):
     
     for filePath in glob.glob("recipes/*.xml"):
         recipeDOM = parse(filePath)
-        taglist = recipeDOM.getElementsByTagName("tag")
+        templist = recipeDOM.getElementsByTagName("tag")
+	taglist = []
+	for domElement in templist:
+	    taglist.append(domElement.firstChild.nodeValue)
         print("taglist: " + str(taglist))
         #compare, get number of matches
         commonTags = set(taglist) & set(tags)
@@ -33,15 +36,15 @@ def findRecipe(tags):
         elif difference == 1:
             minusOneMatches.append(filePath)
 
-        if completeMatches:
-            print("returning from findRecipe with " + str(completeMatches))
-            return completeMatches
-        elif minusOneMatches:
-            print("returning from findRecipe with " + str(minusOneMatches))
-            return minusOneMatches
-        else:
-            print("returning from findRecipe with None")
-            return None
+    if completeMatches:
+        print("returning from findRecipe with " + str(completeMatches))
+        return completeMatches
+    elif minusOneMatches:
+        print("returning from findRecipe with " + str(minusOneMatches))
+        return minusOneMatches
+    else:
+        print("returning from findRecipe with None")
+        return None
 
 def printRecipe(recipePath):
     recipeDOM = parse(recipePath)
@@ -120,7 +123,7 @@ if ver == 0x44:
         # get list of matched colors, if null there are none
         matched = colorMatcher.checkMatchedColors()
         
-        if matched != None:
+        if matched:
             tags = []
             peopleCount = 0
             #iterate over matched colors
@@ -131,7 +134,7 @@ if ver == 0x44:
                     peopleCount += 1
                 else:
                     #don't add duplicate category-tags
-                    if colorMatcher.colorMap.get(color) == tag:
+                    if colorMatcher.colorMap.get(color) in tags:
                         break
                     else:
                         tags.append(colorMatcher.colorMap.get(color))        
