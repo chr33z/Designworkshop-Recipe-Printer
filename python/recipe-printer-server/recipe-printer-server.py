@@ -53,58 +53,49 @@ def printRecipe(recipePath, peopleCount):
     #print title
     title = recipeDOM.getElementsByTagName("title")[0].firstChild.nodeValue
 
-    #printer.doubleHeightOn()
+    printer.doubleHeightOn()
     print(title)
-    #printer.doubleHeightOff()
-    #printer.feed(1)
+    printer.doubleHeightOff()
+    printer.feed(1)
 
     #print blurb + author
     #blurb = recipeDOM.getElementsByTagName("blurb")[0].nodeValue
     author = recipeDOM.getElementsByTagName("author")[0].firstChild.nodeValue
 
-    print("author" + author)
-    #printer.feed(1)
+    print("By " + author)
+    printer.feed(1)
 
-    #printer.boldOn()
-    print("Ingredients")
-    #printer.boldOff()
+    printer.boldOn()
+    print("Ingredients for "+str(peopleCount)+ " servings")
+    printer.boldOff()
 
     # read ingredients, adjust quantity
     for ingredient in recipeDOM.getElementsByTagName("ingredient"):
-        quantity = 0
+        ingredientStr = "";
         
+        # does only work if ingredients tag does only contain a <quantity> node and text
         for child in ingredient.childNodes:
-            if child != None and child.firstChild != None:
+            if child != None:
                 if child.nodeName == 'quantity':
-                    quantity = child.firstChild.nodeValue
+                    ingredientStr += (str(int(child.firstChild.nodeValue) * peopleCount if peopleCount != 0 else 1)) + " "
                 else:
-                    print(child.localName)
-
-
-        #ingredientStr = ingredient.nodeValue;
-        #print(ingredientStr)
-        
-        #if quantityNode != None and len(quantityNode) > 0:
-            #quantity = quantityNode[0].firstChild.nodeValue
+                    ingredientStr += child.nodeValue + " "
             
-        # substitude quantity with adjusted quantity
-        #re.sub('<quantity.*quantity>',
-               #str(quantity * (peopleCount if peopleCount != 0 else 1)), ingredientStr)
-        # remove other tags from string
-        #re.sub('<[^>]+>', '', ingredientStr)
-        
-        #print(ingredientStr.toString())
+        ingredientStr = ' '.join(ingredientStr.split()) # replace all whitespace (space, tabs, ..) with single space
+        print(ingredientStr)
 
-    #printer.feed(1)
-    #printer.boldOn()
-    #print("Preparation")
-    #printer.boldOff()
+    printer.feed(1)
+    printer.boldOn()
+    print("Preparation")
+    printer.boldOff()
 
-    print(recipeDOM.getElementsByTagName('preparation')[0].firstChild.nodeValue)
+    # print preparation
+    preparation = recipeDOM.getElementsByTagName('preparation')[0].firstChild.nodeValue
+    print(' '.join(preparation.split()))
     
 #init
-#printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
-#bus = smbus.SMBus(1)
+printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
+bus = smbus.SMBus(1)
 
 # I2C address 0x29
 # Register 0x12 has device ver. 
@@ -112,9 +103,9 @@ def printRecipe(recipePath, peopleCount):
 
 
 # UNCOMMENT NEXT TWO LINES FOR SERIAL ACCESS
-#bus.write_byte(0x29,0x80|0x12)
-#ver = bus.read_byte(0x29)
-ver = 0x55;
+bus.write_byte(0x29,0x80|0x12)
+ver = bus.read_byte(0x29)
+#ver = 0x55
 #version # should be 0x44
 
 if ver == 0x44:
@@ -178,7 +169,7 @@ if ver == 0x44:
         time.sleep(0.05)
 
 elif ver == 0x55:
-    printRecipe('recipes/recipe-asian-fried-noodles-veg-meat.xml', 1)
+    printRecipe('recipes/recipe-asian-fried-noodles-veg-meat.xml', 2)
     
 #     #for testing the color things
 #     rgb1 = RGB.fromFloat(0.1, 1.0, 0.5)
