@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN" "./recipeprinter.dtd">
+<recipe>
+  <title>Three Bears Instant Oatmeal</title>
+
+  <recipeinfo>
+    <tag>carbs</tag>
+    <blurb>A quick and easy hot breakfast for cold mornings.</blurb>
+
+    <genre>Breakfast food</genre>
+
+    <author>David Horton</author>
+
+    <yield>12 servings</yield>
+  </recipeinfo>
+
+  <ingredientlist>
+    <ingredient>
+      <quantity>50</quantity> 
+      gr. Quick oats
+    </ingredient>
+    <ingredient>
+      <quantity>50</quantity> 
+      gr. Powdered milk
+    </ingredient>
+    <ingredient>
+      <quantity>100</quantity> 
+      gr. Raisins
+    </ingredient>
+    <ingredient>
+      <quantity>100</quantity> 
+      gr. Chopped pecans
+    </ingredient>
+    <ingredient>
+      <quantity>100</quantity> 
+      gr. Brown sugar
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      tsp. Cinnamon
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      tsp. Nutmeg
+    </ingredient>
+    <ingredient>
+      <quantity>1/4</quantity> 
+      tsp. Salt
+    </ingredient> 
+  </ingredientlist>
+
+  <preparation>
+    Place all ingredients into a gallon-sized resealable storage bag. Evacuate most of the air from the bag and zip it closed. Gently the shake bag to mix all ingredients taking care to work out any lumps in the brown sugar. 
+    To serve, combine 1/2 C instant oatmeal mix with 3/4 C water. Microwave for 2 to 3 minutes. Let cool 1 minute and stir before serving.
+  </preparation>
+
+  <notes>Walnuts may be substituted for pecans. You may also want to
+  experiment with different types of dried fruits. A combination of
+  cranberries and blueberries with walnuts or pecans is very tasty.</notes>
+</recipe>
