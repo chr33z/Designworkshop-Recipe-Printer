@@ -3,13 +3,81 @@ from __future__ import division
 import smbus
 import time
 import math
+import random
+import glob
 from YUV import *
 from RGB import *
 from colormatcher import *
+from xml.dom.minidom import parse
 
 #printer
 from Adafruit_Thermal import *
  
+def findRecipe(tags):
+    print("called findRecipe with tags: " + str(tags))
+    completeMatches = []
+    minusOneMatches = []
+    
+    for filePath in glob.glob("recipes/*.xml"):
+        recipeDOM = parse(filePath)
+        templist = recipeDOM.getElementsByTagName("tag")
+	taglist = []
+	for domElement in templist:
+	    taglist.append(domElement.firstChild.nodeValue)
+        print("taglist: " + str(taglist))
+        #compare, get number of matches
+        commonTags = set(taglist) & set(tags)
+        print("commonTags: " + str(commonTags))
+        #distribute to lists according to matches
+        difference = len(tags) - len(commonTags)
+        print("difference: " + str(difference))
+        if difference == 0:
+            completeMatches.append(filePath)
+        elif difference == 1:
+            minusOneMatches.append(filePath)
+
+    if completeMatches:
+        print("returning from findRecipe with " + str(completeMatches))
+        return completeMatches
+    elif minusOneMatches:
+        print("returning from findRecipe with " + str(minusOneMatches))
+        return minusOneMatches
+    else:
+        print("returning from findRecipe with None")
+        return None
+
+def printRecipe(recipePath):
+    recipeDOM = parse(recipePath)
+
+    #print title
+    title = recipeDOM.getElementsByTagName("title")[0].firstChild.nodeValue
+
+    printer.doubleHeightOn()
+    print(title)
+    printer.doubleHeightOff()
+    printer.feed(1)
+
+    #print blurb + author
+    #blurb = recipeDOM.getElementsByTagName("blurb")[0].nodeValue
+    author = recipeDOM.getElementsByTagName("author")[0].firstChild.nodeValue
+
+    print("author" + author)
+    printer.feed(1)
+
+    printer.boldOn()
+    print("Ingredients")
+    printer.boldOff()
+
+    for ingredient in recipeDOM.getElementsByTagName("ingredient"):
+        print(ingredient.firstChild.nodeValue)
+
+    printer.feed(1)
+    printer.boldOn()
+    print("Preparation")
+    printer.boldOff()
+
+    print(recipeDOM.getElementsByTagName('preparation')[0].firstChild.nodeValue)
+    
 #init
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 bus = smbus.SMBus(1)
@@ -45,24 +113,44 @@ if ver == 0x44:
         
         # print color result
         crgb = "C: %s, R: %s, G: %s, B: %s\n" % (clear, red, green, blue)
-        print(crgb)
+        #print(crgb)
         
         # match color
         # all matching is done in YUV color space because of distance function
         
-        colorMatcher.match(YUV.fromFloatRgb(red, green, blue))
+        colorMatcher.match(YUV.fromIntRgb(red, green, blue))
         
         # get list of matched colors, if null there are none
         matched = colorMatcher.checkMatchedColors()
         
-        if matched != None:
-            #iterate over color dictionary (key, value)
-            for color, tag in matched:
-                print(tag)
+        if matched:
+            tags = []
+            peopleCount = 0
+            #iterate over matched colors
+            for color in matched:
+                print("found " + colorMatcher.colorMap.get(color))
+                #ensures that persons aren't added to the tags
+                if colorMatcher.colorMap.get(color) == "person":
+                    peopleCount += 1
+                else:
+                    #don't add duplicate category-tags
+                    if colorMatcher.colorMap.get(color) in tags:
+                        break
+                    else:
+                        tags.append(colorMatcher.colorMap.get(color))        
             
             # find recipe here
-            # print recipe here
-        
+            matchingRecipes = findRecipe(tags)
+
+            if matchingRecipes is None:
+                printer.println("Sorry, I couldn't find any recipes matching your requirements :(")
+                printer.feed(2)
+            else:
+                # select random recipe from list
+                recipeToPrint = random.choice(matchingRecipes)
+                # print recipe here
+                printRecipe(recipeToPrint)
+
         time.sleep(0.05)
 
 # elif ver == 0x55:
@@ -91,4 +179,3 @@ if ver == 0x44:
 
 else:
     print("Device not found\n")
-

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN"
+"./recipeprinter.dtd">
+
+<!-- Sample recipe in recipebook xml format. be sure to use the right dtd 
+	file located at ./recipeprinter.dtd And do not place any xml comments om 
+	front of the xml tag! -->
+
+<recipe>
+	<title>Vegetable Lasagne</title>
+
+	<recipeinfo>
+		<tag>carbs</tag>
+		<tag>vegetables</tag>
+
+		<author>Cleidig</author>
+
+		<yield>4 servings</yield>
+
+		<preptime>45 minutes</preptime>
+	</recipeinfo>
+
+	<ingredientlist>
+		<ingredient>
+			<quantity>750</quantity>
+			<unit>gr.</unit>
+			<fooditem>mixed vegetables</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>4</quantity>
+			<unit>Tbsp.</unit>
+			<fooditem>butter</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>500</quantity>
+			<unit>ml.</unit>
+			<fooditem>milk</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>12</quantity>
+			<fooditem>lasagne sheets</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<fooditem>flour</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<quantity>300</quantity>
+			<unit>gr.</unit>
+			<fooditem>gouda cheese</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<fooditem>mixed spices</fooditem>
+		</ingredient>
+
+		<ingredient>
+			<fooditem>parsley</fooditem>
+		</ingredient>
+	</ingredientlist>
+
+	<preparation>
+		Margarine in einem Topf schmelzen lassen, Mehl einrühren bis es dickflüssig wird, dann die Milch mit einem Schneebesen einrühren. Mit Vegeta, Salz, Pfeffer würzen.
+		Das Gemüse schön klein schneiden und in der Soße bissfest ziehen lassen. Zum Schluss Petersilie zugeben.
+		Zuerst etwas Soße in eine Auflaufform geben damit der Boden bedeckt ist. Dann abwechselnd Lasagneplatten und Gemüsemischung stapeln. Zum Schluss reichlich mit Käse bedecken und im Backofen bei 200 Grad goldgelb überbacken.
+	</preparation>
+</recipe>
