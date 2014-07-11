@@ -50,7 +50,7 @@ def printRecipe(recipePath):
     recipeDOM = parse(recipePath)
 
     #print title
-    title = recipeDOM.getElementsByTagName("title")[0].nodeValue
+    title = recipeDOM.getElementsByTagName("title")[0].firstChild.nodeValue
 
     printer.doubleHeightOn()
     print(title)
@@ -59,7 +59,7 @@ def printRecipe(recipePath):
 
     #print blurb + author
     #blurb = recipeDOM.getElementsByTagName("blurb")[0].nodeValue
-    author = recipeDOM.getElementsByTagName("author")[0].nodeValue
+    author = recipeDOM.getElementsByTagName("author")[0].firstChild.nodeValue
 
     print("author" + author)
     printer.feed(1)
@@ -76,7 +76,7 @@ def printRecipe(recipePath):
     print("Preparation")
     printer.boldOff()
 
-    print(recipeDOM.getElementsByTagName('preparation')[0].nodeValue)
+    print(recipeDOM.getElementsByTagName('preparation')[0].firstChild.nodeValue)
     
 #init
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
