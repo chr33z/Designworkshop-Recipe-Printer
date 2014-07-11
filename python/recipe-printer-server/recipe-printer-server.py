@@ -53,7 +53,7 @@ def printRecipe(recipePath):
     title = recipeDOM.getElementsByTagName("title")[0].nodeValue
 
     printer.doubleHeightOn()
-    print("printer.println(title)")
+    print(title)
     printer.doubleHeightOff()
     printer.feed(1)
 
@@ -61,19 +61,19 @@ def printRecipe(recipePath):
     #blurb = recipeDOM.getElementsByTagName("blurb")[0].nodeValue
     author = recipeDOM.getElementsByTagName("author")[0].nodeValue
 
-    print("printer.println(blurb + ' by ' + author)")
+    print("author" + author)
     printer.feed(1)
 
     printer.boldOn()
-    print("printer.println(\"Ingredients\")")
+    print("Ingredients")
     printer.boldOff()
 
     for ingredient in recipeDOM.getElementsByTagName("ingredient"):
-        print("printer.println(ingredient[0].nodeValue)")
+        print(ingredient.firstChild.nodeValue)
 
     printer.feed(1)
     printer.boldOn()
-    print("printer.println('Preparation')")
+    print("Preparation")
     printer.boldOff()
 
     print(recipeDOM.getElementsByTagName('preparation')[0].nodeValue)
