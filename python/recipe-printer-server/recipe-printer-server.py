@@ -116,28 +116,33 @@ else:
     print("Device not found\n")
 
 def findRecipe(tags):
+    print("called findRecipe with tags: " + str(tags))
     completeMatches = []
     minusOneMatches = []
-
     
     for filePath in glob.glob(recipes/*.xml):
         recipeDOM = parse(filePath)
         taglist = recipeDOM.getElementsByTagName("tag")
-        print(taglist)
+        print("taglist: " + str(taglist))
         #compare, get number of matches
         commonTags = set(taglist) & set(tags)
+        print("commonTags: " + str(commonTags))
         #distribute to lists according to matches
         difference = len(tags) - len(commonTags)
+        print("difference: " + str(difference))
         if difference == 0:
             completeMatches.append(filePath)
         elif difference == 1:
             minusOneMatches.append(filePath)
 
         if completeMatches:
+            print("returning from findRecipe with " + str(completeMatches))
             return completeMatches
         elif minusOneMatches:
+            print("returning from findRecipe with " + str(minusOneMatches))
             return minusOneMatches
         else:
+            print("returning from findRecipe with None")
             return None
 
 def printRecipe(recipePath):
@@ -147,7 +152,7 @@ def printRecipe(recipePath):
     title = recipeDOM.getElementsByTagName("title").nodeValue
 
     printer.doubleHeightOn()
-    printer.println(title)
+    print("printer.println(title)")
     printer.doubleHeightOff()
     printer.feed(1)
 
@@ -155,20 +160,20 @@ def printRecipe(recipePath):
     blurb = recipeDOM.getElementsByTagName("blurb").nodeValue
     author = recipeDOM.getElementsByTagName("author").nodeValue
 
-    printer.println(blurb + ' by ' + author)
+    print("printer.println(blurb + ' by ' + author)")
     printer.feed(1)
 
     printer.boldOn()
-    printer.println("Ingredients")
+    print("printer.println("Ingredients")")
     printer.boldOff()
 
     for ingredient in recipeDOM.getElementsByTagName("ingredient"):
-        printer.println(ingredient.nodeValue)
+        print("printer.println(ingredient.nodeValue)")
 
     printer.feed(1)
     printer.boldOn()
-    printer.println("Preparation")
+    print("printer.println('Preparation')")
     printer.boldOff()
 
-    printer.println(recipeDOM.getElementsByTagName("preparation"))
+    print("printer.println(recipeDOM.getElementsByTagName('preparation'))")
     
