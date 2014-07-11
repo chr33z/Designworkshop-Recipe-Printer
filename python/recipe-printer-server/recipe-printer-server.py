@@ -66,7 +66,7 @@ if ver == 0x44:
                 print("found " + colorMatcher.colorMap.get(color))
                 #ensures that persons aren't added to the tags
                 if colorMatcher.colorMap.get(color) == "person":
-                    peopleCount++
+                    peopleCount += 1
                 else:
                     #don't add duplicate category-tags
                     if colorMatcher.colorMap.get(color) == tag:
@@ -120,7 +120,7 @@ def findRecipe(tags):
     completeMatches = []
     minusOneMatches = []
     
-    for filePath in glob.glob(recipes/*.xml):
+    for filePath in glob.glob("recipes/*.xml"):
         recipeDOM = parse(filePath)
         taglist = recipeDOM.getElementsByTagName("tag")
         print("taglist: " + str(taglist))
@@ -164,7 +164,7 @@ def printRecipe(recipePath):
     printer.feed(1)
 
     printer.boldOn()
-    print("printer.println("Ingredients")")
+    print("printer.println(\"Ingredients\")")
     printer.boldOff()
 
     for ingredient in recipeDOM.getElementsByTagName("ingredient"):
