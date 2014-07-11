@@ -6,7 +6,7 @@
 
   <recipeinfo>
     <tag>meat</tag>
-	<tag>vegetables</tag>
+    <tag>vegetables</tag>
       
     <blurb>Warm your tummy with a New Orleans favorite.</blurb>
 
@@ -14,72 +14,129 @@
 
     <genre>Soups and stews</genre>
 
-    <yield>6 servings</yield>
+    <yield>1 serving</yield>
 
     <preptime>1 1/2 hours</preptime>
   </recipeinfo>
 
   <ingredientlist>
-    <ingredient>1/4 C. peanut oil</ingredient>
+    <ingredient>
+      <quantity>10</quantity> 
+      ml peanut oil
+    </ingredient>
 
-    <ingredient>1/3 C. flour</ingredient>
+    <ingredient>
+      <quantity>20</quantity> 
+      gr. flour
+    </ingredient>
 
-    <ingredient>1 small onion, diced</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      small onion, diced
+    </ingredient>
 
-    <ingredient>2 ribs of celery, chopped</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      ribs of celery, chopped
+    </ingredient>
 
-    <ingredient>1 small green pepper, seeded and diced</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      small green pepper, seeded and diced
+    </ingredient>
 
-    <ingredient>3 plum (roma) tomatoes, diced</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      plum (roma) tomatoes, diced
+    </ingredient>
 
-    <ingredient>1/4 lb. okra, sliced</ingredient>
+    <ingredient>
+      <quantity>100</quantity> 
+      gr. okra, sliced
+    </ingredient>
 
-    <ingredient>1/2 lb. chicken, cut into bite-sized pieces</ingredient>
+    <ingredient>
+      <quantity>100</quantity> 
+      gr. chicken, cut into bite-sized pieces
+    </ingredient>
 
-    <ingredient>1/2 lb. pork cutlet, cut into bite-sized pieces</ingredient>
+    <ingredient>
+      <quantity>100</quantity> 
+      gr. pork cutlet, cut into bite-sized pieces
+    </ingredient>
 
-    <ingredient>1/2 lb. wee shrimp, cleaned and de-veined</ingredient>
+    <ingredient>
+      <quantity>100</quantity> 
+      gr. wee shrimp, cleaned and de-veined
+    </ingredient>
 
-    <ingredient>4 C. chicken stock</ingredient>
+    <ingredient>
+      <quantity>200</quantity> 
+      ml chicken stock
+    </ingredient>
 
-    <ingredient>1/4 tsp. cayenne pepper</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      tsp. cayenne pepper
+    </ingredient>
 
-    <ingredient>1/4 tsp. white pepper</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      tsp. white pepper
+    </ingredient>
 
-    <ingredient>1/4 tsp. black pepper</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      tsp. black pepper
+    </ingredient>
 
-    <ingredient>pinch of parley</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      pinch of parsley
+    </ingredient>
 
-    <ingredient>pinch of sage leaves</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      pinch of sage leaves
+    </ingredient>
 
-    <ingredient>pinch of thyme leaves</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      pinch of thyme leaves
+    </ingredient>
 
-    <ingredient>pinch of mustard powder</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      pinch of mustard powder
+    </ingredient>
 
-    <ingredient>1 whole bay leaf</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      whole bay leaf
+    </ingredient>
 
-    <ingredient>salt to taste</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      pinch of salt
+    </ingredient>
 
-    <ingredient>3/4 C. parboiled (converted) rice</ingredient>
+    <ingredient>
+      <quantity>100</quantity> 
+      gr. parboiled rice
+    </ingredient>
 
-    <ingredient>1 1/2 C. water</ingredient>
+    <ingredient>
+      <quantity>200</quantity> 
+      ml water
+    </ingredient>
   </ingredientlist>
 
-  <preparation>Create a roux by mixing oil and flour in a <equipment>3-quart
-  saucepan</equipment> over medium heat. Stir often with a <equipment>wire
-  whisk</equipment> until the roux becomes the color of peanut butter. Add
-  onion, celery and green pepper. Be very careful as the roux is very hot and
-  tends to splatter when the veggies hit it. Trade the wisk for a
-  <equipment>large spoon</equipment> and stir often. When the onion begins to
-  turn translucent add tomatoes and okra. As tomatoes and okra soften add the
-  chicken and pork. The mixture will be very thick at this point, so add a
-  little chicken stock as needed to make stiring less of a chore. When the
-  chicken and pork are slightly browned add the remaining chicken stock and
-  bring to a boil. Stir in all of the spices, cover the pot and reduce heat to
-  a simmer. If the shrimp is frozen add it now otherwise wait until ten
-  minutes before serving. Salt acording to taste. Add the rice to boiling
-  water in a <equipment>1-quart saucepan</equipment>, reduce heat to low and
-  cook for 25 minutes or according to package directions.</preparation>
+  <preparation>
+    Create a roux by mixing oil and flour in a 3-quart saucepan over medium heat. Stir often with a wire whisk until the roux becomes the color of peanut butter. Add onion, celery and green pepper. Be very careful as the roux is very hot and tends to splatter when the veggies hit it. 
+    Trade the wisk for a large spoon and stir often. When the onion begins to turn translucent add tomatoes and okra. As tomatoes and okra soften add the chicken and pork. The mixture will be very thick at this point, so add a little chicken stock as needed to make stiring less of a chore. 
+    When the chicken and pork are slightly browned add the remaining chicken stock and bring to a boil. Stir in all of the spices, cover the pot and reduce heat to a simmer. If the shrimp is frozen add it now otherwise wait until ten minutes before serving. Salt acording to taste. 
+    Add the rice to boiling water in a 1-quart saucepan, reduce heat to low and cook for 25 minutes or according to package directions. 
+  </preparation>
 
   <serving>Place a ladle full of gumbo in a bowl and top with a couple
   spoonfuls of rice. Garnish with parsley if you're into the whole

@@ -20,58 +20,52 @@
 	<ingredientlist>
 		<ingredient>
 			<quantity>1</quantity>
-			<fooditem>red onion</fooditem>
+			red onion
 		</ingredient>
 		
 		<ingredient>
 			<quantity>1</quantity>
-			<fooditem>white onion</fooditem>
+			white onion
 		</ingredient>
 
 		<ingredient>
 			<quantity>1</quantity>
-			<fooditem>egg plant</fooditem>
+			egg plant
 		</ingredient>
 
 		<ingredient>
-			<quantity>4</quantity>
-			<fooditem>tomatoes</fooditem>
+			<quantity>2</quantity>
+			tomatoes
 		</ingredient>
 
 		<ingredient>
 			<quantity>100</quantity>
-			<unit>gr.</unit>
-			<fooditem>coconut milk</fooditem>
+			gr. coconut milk 
 		</ingredient>
 
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>tbs.</unit>
-			<fooditem>crushed tomatoes</fooditem>
+			tbs. crushed tomatoes 
 		</ingredient>
 
 		<ingredient>
 			<quantity>3</quantity>
-			<unit>tbs.</unit>
-			<fooditem>olive oil</fooditem>
+			tbs. olive oil 
 		</ingredient>
 
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>piece</unit>
-			<fooditem>garlic</fooditem>
+			piece garlic 
 		</ingredient>
 
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>tsp.</unit>
-			<fooditem>sweet
-				basil</fooditem>
+			tsp. sweet basil
 		</ingredient>
 
 		<ingredient>
 			<quantity>1</quantity>
-			<fooditem>paprica</fooditem>
+			pinch of paprica
 		</ingredient>
 	</ingredientlist>
 

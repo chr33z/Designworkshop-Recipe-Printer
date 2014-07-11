@@ -4,7 +4,6 @@
 	<title>Pasta Sauce With Meat</title>
 
 	<recipeinfo>
-	    <!-- some example tags to use -->
 	    <tag>meat</tag>
 	    <tag>carbs</tag>
 	    
@@ -20,105 +19,64 @@
 
 		<preptime>About one hour</preptime>
 		
-		<!-- time in milliseconds is just for processing reasons, so out printer can decide how long the preparation takes -->
-		<preptimeutc>600000</preptimeutc>
+		<preptimeutc>60</preptimeutc>
 	</recipeinfo>
 
 	<ingredientlist>
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>tsp.</unit>
-			<fooditem>olive
-				oil</fooditem>
+			tsp. olive oil 
 		</ingredient>
-
-		<ingredient>
-			<quantity>3</quantity>
-			<unit>cloves</unit>
-			<fooditem>garlic</fooditem>
-			, minced
-		</ingredient>
-
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>rib</unit>
-			<fooditem>celery</fooditem>
-			, finely chopped
+			cloves garlic, minced 
 		</ingredient>
-
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>lb.</unit>
-			<fooditem>lean ground
-				beef</fooditem>
+			rib celery, finely chopped 
 		</ingredient>
-
 		<ingredient>
-			<quantity>One</quantity>
-			<unit>28 oz. can</unit>
-			<fooditem>crushed tomatoes</fooditem>
+			<quantity>200</quantity>
+			gr. lean ground beef 
 		</ingredient>
-
 		<ingredient>
-			<quantity>One</quantity>
-			<unit>6 oz. can</unit>
-			<fooditem>tomato paste</fooditem>
+			<quantity>14</quantity>
+			oz. crushed tomatoes 
 		</ingredient>
-
+		<ingredient>
+			<quantity>2</quantity>
+			oz. tomato paste 
+		</ingredient>
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>tsp.</unit>
-			<fooditem>Italian
-				seasoning</fooditem>
+			tsp. Italian seasoning 
 		</ingredient>
-
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>tsp.</unit>
-			<fooditem>sweet
-				basil</fooditem>
+			tsp. sweet basil 
 		</ingredient>
-
 		<ingredient>
-			<quantity>1 1/2</quantity>
-			<unit>tsp.</unit>
-			<fooditem>brown
-				sugar</fooditem>
+			<quantity>1</quantity>
+			tsp. brown sugar 
 		</ingredient>
-
 		<ingredient>
-			<quantity>1/2</quantity>
-			<unit>tsp.</unit>
-			<fooditem>kosher
-				salt</fooditem>
+			<quantity>1</quantity>
+			tsp. kosher salt 
 		</ingredient>
-
 		<ingredient>
-			A
-			<quantity>pinch</quantity>
-			of
-			<fooditem>crushed red
-				pepper</fooditem>
-		</ingredient>
-
+			<quantity>1</quantity>
+			pinch of crushed red pepper </ingredient>
 		<ingredient>
-			<quantity>1/4</quantity>
-			<unit>C.</unit>
-			<fooditem>grated
-				Romano cheese</fooditem>
+			<quantity>50</quantity>
+			gr. grated Romano cheese 
 		</ingredient>
 	</ingredientlist>
 
 	<preparation>
-		In a
-		<equipment>3-quart saucepan</equipment>
-		sweat garlic and
-		celery in olive oil over medium-low heat. Add ground beef and raise heat to
-		brown slightly. Drain fat if necessary. Add crushed tomatoes, spices,
-		sugar
-		and salt. Lower heat to a slow simmer and add cheese. Cook for at least
-		30
-		minutes, much longer if possible.
+		In a 3-quart saucepan sweat garlic and celery in olive oil over medium-low heat. 
+		Add ground beef and raise heat to brown slightly. Drain fat if necessary. 
+		Add crushed tomatoes, spices, sugar and salt. Lower heat to a slow simmer and add cheese. 
+		Cook for at least 30 minutes, much longer if possible. 
 	</preparation>
 
 	<serving>Serve over spaghetti or any other favorite pasta.</serving>

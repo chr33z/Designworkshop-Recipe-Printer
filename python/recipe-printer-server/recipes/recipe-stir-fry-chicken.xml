@@ -18,98 +18,83 @@
 
 	<ingredientlist>
 		<ingredient>
-			<quantity>600</quantity>
-			<unit>gr.</unit>
-			<fooditem>chicken breast</fooditem>
+			<quantity>100</quantity>
+			gr. chicken breast 
 		</ingredient>
-
-		<ingredient>
-			<quantity>2</quantity>
-			<unit>tbs.</unit>
-			<fooditem>olive oil</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>250</quantity>
-			<unit>ml.</unit>
-			<fooditem>vegetable stock</fooditem>
-		</ingredient>
-
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>medium sized</unit>
-			<fooditem>onion</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>2</quantity>
-			<fooditem>garlic cloves</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>2</quantity>
-			<fooditem>paprica</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>150</quantity>
-			<unit>gr.</unit>
-			<fooditem>zucchini</fooditem>
+			tbs. olive oil 
 		</ingredient>
 
 		<ingredient>
 			<quantity>100</quantity>
-			<unit>gr.</unit>
-			<fooditem>carots</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>200</quantity>
-			<unit>gr.</unit>
-			<fooditem>champignions</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>200</quantity>
-			<unit>gr.</unit>
-			<fooditem>sour creme</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>75</quantity>
-			<unit>gr.</unit>
-			<fooditem>creme fraiche</fooditem>
+			ml. vegetable stock 
 		</ingredient>
 
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>glass</unit>
-			<fooditem>red wine</fooditem>
+			medium sized onion 
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			garlic cloves
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			paprica
+		</ingredient>
+
+		<ingredient>
+			<quantity>75</quantity>
+			gr. zucchini 
+		</ingredient>
+
+		<ingredient>
+			<quantity>500</quantity>
+			gr. carrots 
+		</ingredient>
+
+		<ingredient>
+			<quantity>50</quantity>
+			gr. champignions 
+		</ingredient>
+
+		<ingredient>
+			<quantity>50</quantity>
+			gr. sour cream 
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			tbs. creme fraiche 
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			glass red wine 
 		</ingredient>
 		
 		<ingredient>
-			<fooditem>basil</fooditem>
+			<quantity>1</quantity>
+			pinch of basil
 		</ingredient>
 		
 		<ingredient>
-			<fooditem>thyme</fooditem>
+			<quantity>1</quantity>
+			pinch of thyme
 		</ingredient>
 		
 		<ingredient>
-			<fooditem>italian spices</fooditem>
+			<quantity>1</quantity>
+			tbs. italian spices
 		</ingredient>
 	</ingredientlist>
 
 	<preparation>
-		In a
-		<equipment>3-quart saucepan</equipment>
-		sweat garlic and
-		celery in olive oil over medium-low heat. Add ground beef and raise heat to
-		brown slightly. Drain fat if necessary. Add crushed tomatoes, spices,
-		sugar
-		and salt. Lower heat to a slow simmer and add cheese. Cook for at least
-		30
-		minutes, much longer if possible.
+		In a 3-quart saucepan sweat garlic and celery in olive oil over medium-low heat. Add ground beef and raise heat to brown slightly. Drain fat if necessary. Add crushed tomatoes, spices, sugar and salt. 
+		Lower heat to a slow simmer and add cheese. Cook for at least 30 minutes, much longer if possible. 
 	</preparation>
 
 	<serving>Serve over spaghetti or any other favorite pasta.</serving>

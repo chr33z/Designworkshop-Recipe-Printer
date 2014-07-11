@@ -13,51 +13,75 @@
 
     <preptime>30 minutes</preptime>
 
-    <yield>8 servings</yield>
+    <yield>1 servings</yield>
   </recipeinfo>
 
   <ingredientlist>
-    <ingredient><quantity>1</quantity> <unit>tsp.</unit> <fooditem>olive
-    oil</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. olive oil
+    </ingredient>
 
-    <ingredient><quantity>1</quantity> <fooditem>medium onion</fooditem>,
-    chopped</ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+       medium onion, chopped 
+     </ingredient>
 
-    <ingredient><quantity>2</quantity> <unit>cloves</unit>
-    <fooditem>garlic</fooditem>, minced</ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      cloves garlic, minced 
+    </ingredient>
 
-    <ingredient><quantity>1</quantity> <unit>lb.</unit> <fooditem>beef stew
-    meat</fooditem> cut into bite-sized pieces</ingredient>
+    <ingredient>
+      <quantity>100</quantity>
+      gr. beef stew meat cut into bite-sized pieces 
+    </ingredient>
 
-    <ingredient><quantity>1</quantity> <unit>tsp.</unit> <fooditem>chili
-    powder</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. chili powder 
+    </ingredient>
 
-    <ingredient><quantity>1</quantity> <unit>tsp.</unit>
-    <fooditem>cumin</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. cumin 
+    </ingredient>
 
-    <ingredient><quantity>1/2</quantity> <unit>tsp.</unit> <fooditem>cayenne
-    pepper</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. cayenne pepper 
+    </ingredient>
 
-    <ingredient><quantity>One</quantity> <unit>28 oz. can</unit>
-    <fooditem>crushed tomatoes</fooditem></ingredient>
+    <ingredient>
+      <quantity>8</quantity>
+      oz. crushed tomatoes 
+    </ingredient>
 
-    <ingredient><quantity>One</quantity> <unit>40 oz. can</unit>
-    <fooditem>Brooks chili hot beans</fooditem>, drained</ingredient>
+    <ingredient>
+      <quantity>5</quantity>
+      oz. Brooks chili hot beans, drained 
+    </ingredient>
 
-    <ingredient><quantity>1/2</quantity> <unit>tsp.</unit> <fooditem>kosher
-    salt</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. kosher salt 
+    </ingredient>
 
-    <ingredient><quantity>2</quantity> <unit>tsp.</unit> <fooditem>brown
-    sugar</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. brown sugar 
+    </ingredient>
   </ingredientlist>
 
-  <preparation>Add olive oil, garlic and onion to a <equipment>4-quart
-  saucepan</equipment>. Sweat onion and garlic for a few minutes over
-  medium-low heat. Add beef, chili powder, cumin and cayenne pepper. Raise
-  heat to brown the meat slightly. Add crushed tomatoes, beans, salt and
-  sugar. Reduce heat to a low simmer. Cook for at least 20 minutes before
-  serving, much longer if time permits.</preparation>
-
+  <preparation>
+    Add olive oil, garlic and onion to a 4-quart saucepan. 
+    Sweat onion and garlic for a few minutes over medium-low heat. 
+    Add beef, chili powder, cumin and cayenne pepper. 
+    Raise heat to brown the meat slightly. 
+    Add crushed tomatoes, beans, salt and sugar. 
+    Reduce heat to a low simmer. 
+    Cook for at least 20 minutes before serving, much longer if time permits.
+  </preparation>
   <serving>Top with Chihuahua cheese and sour cream. Serve with
   cornbread.</serving>
 
