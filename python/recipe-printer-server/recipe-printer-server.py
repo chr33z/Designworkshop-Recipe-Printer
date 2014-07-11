@@ -13,6 +13,68 @@ from xml.dom.minidom import parse
 #printer
 from Adafruit_Thermal import *
  
+def findRecipe(tags):
+    print("called findRecipe with tags: " + str(tags))
+    completeMatches = []
+    minusOneMatches = []
+    
+    for filePath in glob.glob("recipes/*.xml"):
+        recipeDOM = parse(filePath)
+        taglist = recipeDOM.getElementsByTagName("tag")
+        print("taglist: " + str(taglist))
+        #compare, get number of matches
+        commonTags = set(taglist) & set(tags)
+        print("commonTags: " + str(commonTags))
+        #distribute to lists according to matches
+        difference = len(tags) - len(commonTags)
+        print("difference: " + str(difference))
+        if difference == 0:
+            completeMatches.append(filePath)
+        elif difference == 1:
+            minusOneMatches.append(filePath)
+
+        if completeMatches:
+            print("returning from findRecipe with " + str(completeMatches))
+            return completeMatches
+        elif minusOneMatches:
+            print("returning from findRecipe with " + str(minusOneMatches))
+            return minusOneMatches
+        else:
+            print("returning from findRecipe with None")
+            return None
+
+def printRecipe(recipePath):
+    recipeDOM = parse(recipePath)
+
+    #print title
+    title = recipeDOM.getElementsByTagName("title").nodeValue
+
+    printer.doubleHeightOn()
+    print("printer.println(title)")
+    printer.doubleHeightOff()
+    printer.feed(1)
+
+    #print blurb + author
+    blurb = recipeDOM.getElementsByTagName("blurb").nodeValue
+    author = recipeDOM.getElementsByTagName("author").nodeValue
+
+    print("printer.println(blurb + ' by ' + author)")
+    printer.feed(1)
+
+    printer.boldOn()
+    print("printer.println(\"Ingredients\")")
+    printer.boldOff()
+
+    for ingredient in recipeDOM.getElementsByTagName("ingredient"):
+        print("printer.println(ingredient.nodeValue)")
+
+    printer.feed(1)
+    printer.boldOn()
+    print("printer.println('Preparation')")
+    printer.boldOff()
+
+    print("printer.println(recipeDOM.getElementsByTagName('preparation'))")
+    
 #init
 printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 bus = smbus.SMBus(1)
@@ -114,66 +176,3 @@ if ver == 0x44:
 
 else:
     print("Device not found\n")
-
-def findRecipe(tags):
-    print("called findRecipe with tags: " + str(tags))
-    completeMatches = []
-    minusOneMatches = []
-    
-    for filePath in glob.glob("recipes/*.xml"):
-        recipeDOM = parse(filePath)
-        taglist = recipeDOM.getElementsByTagName("tag")
-        print("taglist: " + str(taglist))
-        #compare, get number of matches
-        commonTags = set(taglist) & set(tags)
-        print("commonTags: " + str(commonTags))
-        #distribute to lists according to matches
-        difference = len(tags) - len(commonTags)
-        print("difference: " + str(difference))
-        if difference == 0:
-            completeMatches.append(filePath)
-        elif difference == 1:
-            minusOneMatches.append(filePath)
-
-        if completeMatches:
-            print("returning from findRecipe with " + str(completeMatches))
-            return completeMatches
-        elif minusOneMatches:
-            print("returning from findRecipe with " + str(minusOneMatches))
-            return minusOneMatches
-        else:
-            print("returning from findRecipe with None")
-            return None
-
-def printRecipe(recipePath):
-    recipeDOM = parse(recipePath)
-
-    #print title
-    title = recipeDOM.getElementsByTagName("title").nodeValue
-
-    printer.doubleHeightOn()
-    print("printer.println(title)")
-    printer.doubleHeightOff()
-    printer.feed(1)
-
-    #print blurb + author
-    blurb = recipeDOM.getElementsByTagName("blurb").nodeValue
-    author = recipeDOM.getElementsByTagName("author").nodeValue
-
-    print("printer.println(blurb + ' by ' + author)")
-    printer.feed(1)
-
-    printer.boldOn()
-    print("printer.println(\"Ingredients\")")
-    printer.boldOff()
-
-    for ingredient in recipeDOM.getElementsByTagName("ingredient"):
-        print("printer.println(ingredient.nodeValue)")
-
-    printer.feed(1)
-    printer.boldOn()
-    print("printer.println('Preparation')")
-    printer.boldOff()
-
-    print("printer.println(recipeDOM.getElementsByTagName('preparation'))")
-    
