@@ -22,49 +22,48 @@
 
 	<ingredientlist>
 		<ingredient>
-			<quantity>750</quantity>
-			<unit>gr.</unit>
-			<fooditem>mixed vegetables</fooditem>
+			<quantity>200</quantity>
+			gr. mixed vegetables 
 		</ingredient>
 
 		<ingredient>
 			<quantity>4</quantity>
-			<unit>Tbsp.</unit>
-			<fooditem>butter</fooditem>
+			tbs. butter 
 		</ingredient>
 
 		<ingredient>
-			<quantity>500</quantity>
-			<unit>ml.</unit>
-			<fooditem>milk</fooditem>
+			<quantity>150</quantity>
+			ml. milk 
 		</ingredient>
 
 		<ingredient>
-			<quantity>12</quantity>
-			<fooditem>lasagne sheets</fooditem>
+			<quantity>6</quantity>
+			lasagne sheets
 		</ingredient>
 
 		<ingredient>
-			<fooditem>flour</fooditem>
+			<quantity>1</quantity>
+			tbs. flour
 		</ingredient>
 
 		<ingredient>
-			<quantity>300</quantity>
-			<unit>gr.</unit>
-			<fooditem>gouda cheese</fooditem>
+			<quantity>100</quantity>
+			gr. gouda cheese 
 		</ingredient>
 
 		<ingredient>
-			<fooditem>mixed spices</fooditem>
+			<quantity>1</quantity>
+			tbs. mixed spices
 		</ingredient>
 
 		<ingredient>
-			<fooditem>parsley</fooditem>
+			<quantity>1</quantity>
+			bunch of parsley
 		</ingredient>
 	</ingredientlist>
 
 	<preparation>
-		Margarine in einem Topf schmelzen lassen, Mehl einrühren bis es dickflüssig wird, dann die Milch mit einem Schneebesen einrühren. Mit Vegeta, Salz, Pfeffer würzen.
+		Butter in einem Topf schmelzen lassen, Mehl einrühren bis es dickflüssig wird, dann die Milch mit einem Schneebesen einrühren. Mit Vegeta, Salz, Pfeffer würzen.
 		Das Gemüse schön klein schneiden und in der Soße bissfest ziehen lassen. Zum Schluss Petersilie zugeben.
 		Zuerst etwas Soße in eine Auflaufform geben damit der Boden bedeckt ist. Dann abwechselnd Lasagneplatten und Gemüsemischung stapeln. Zum Schluss reichlich mit Käse bedecken und im Backofen bei 200 Grad goldgelb überbacken.
 	</preparation>
