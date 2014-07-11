@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN" "./recipeprinter.dtd">
+<recipe>
+  <title>Hippie Pancakes</title>
+
+  <recipeinfo>
+    <tag>carbs</tag>
+    <blurb>Socially conscious breakfast food.</blurb>
+
+    <author>David Horton</author>
+
+    <yield>12 to 16 small pancakes, enough for two hippies</yield>
+
+    <preptime>10 minutes</preptime>
+  </recipeinfo>
+
+  <ingredientlist>
+    <ingredient>
+      <quantity>100</quantity>
+      gr. unbleached wheat blend flour 
+    </ingredient>
+
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. baking powder 
+    </ingredient>
+
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. unrefined sugar 
+    </ingredient>
+
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. coarse kosher salt 
+    </ingredient>
+
+    <ingredient>
+      <quantity>1</quantity>
+      free-range egg
+    </ingredient>
+
+    <ingredient>
+      <quantity>150</quantity>
+      ml. milk 
+    </ingredient>
+
+    <ingredient>
+      <quantity>1</quantity>
+      tsp. organic vegetable oil 
+    </ingredient>
+  </ingredientlist>
+
+  <preparation>
+    Pre-heat griddle over medium heat. Combine dry ingredients in a mixing bowl. Stir in egg, milk and oil. Use a large spoon or gravy ladle to transfer pancake batter to the griddle. Pancakes are ready to flip when large bubbles can be seen on top.
+  </preparation>
+  <serving>Top with fruit and berries or serve with traditional maple
+  syrup.</serving>
+
+  <notes>All-purpose flour may be used instead of wheat blend, but decrease
+  the milk by 1/4 C and cut the baking powder by 1/2 tsp. You may also replace
+  the unrefined sugar with brown sugar and yes, regular eggs work too, but at
+  this point you have completely sold out to The Man and may as well just hop
+  in your beemer and drive to some trendy, over-priced, yuppie pancake house
+  and get it over with.</notes>
+</recipe>

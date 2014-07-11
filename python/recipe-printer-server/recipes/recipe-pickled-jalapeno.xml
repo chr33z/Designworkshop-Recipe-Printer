@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN" "./recipeprinter.dtd">
+<recipe>
+  <title>Pickled Jalapeno Mix</title>
+
+  <recipeinfo>
+    <tag>vegetables</tag>
+    <blurb>A zesty south of the border appetizer.</blurb>
+
+    <genre>Mexican food</genre>
+
+    <author>David Horton</author>
+
+    <preptime>30 minutes</preptime>
+  </recipeinfo>
+
+  <ingredientlist>
+    <ingredient>
+      <quantity>4</quantity> 
+      Jalapeno peppers, quartered
+    </ingredient>
+    <ingredient>
+      <quantity>4</quantity> 
+      oz. Mushrooms, coursely chopped
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      Small onion, coursely chopped
+    </ingredient>
+    <ingredient>
+      <quantity>8</quantity> 
+      oz. Carrots, sliced
+    </ingredient>
+    <ingredient>
+      <quantity>2</quantity> 
+      Bay leaves
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      C. Cider vinegar
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      C. Water
+    </ingredient>
+    <ingredient>
+      <quantity>1 1/2</quantity> 
+      Tbsp. Kosher salt
+    </ingredient> 
+  </ingredientlist>
+
+  <preparation>
+    Combine vinegar, water and salt in a 2-quart saucepan and bring to a boil. Combine jalapenos, mushrooms, onion, carrots and bay leaves in a bowl. Pour hot vinegar solution over peppers and vegetables. Cover and refrigerate.
+  </preparation>
+
+  <serving>Serve with tortilla chips as an appetizer.</serving>
+
+  <notes>Leftovers may be kept in the refrigerator for a long time without
+  spoilage because of the preserving effects of the vinegar and hot
+  peppers.</notes>
+</recipe>

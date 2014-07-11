@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE recipe PUBLIC "-//Happy-Monkey//DTD RecipeBook//EN"
+"./recipeprinter.dtd">
+<recipe>
+  <title>Rigatoni with Sausage and Tomato Cream Sauce</title>
+
+  <recipeinfo>
+    <tag>meat</tag>
+    <tag>carbs</tag>
+
+    <blurb>Tubes of rigatoni hold the tomato sauce, giving you a burst of creamy flavor with every bite.</blurb>
+
+    <genre>Pasta</genre>
+
+    <author>foodandwine.com</author>
+
+    <preptime>30 minutes</preptime>
+
+    <yield>4 servings</yield>
+  </recipeinfo>
+
+  <ingredientlist>
+    <ingredient>
+      <quantity>1</quantity>
+      tablespoon olive oil
+    </ingredient>
+    <ingredient>
+      <quantity>250</quantity>
+      gr. mild or hot Italian sausage, casings removed
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      onion, chopped
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      cloves garlic, minced
+    </ingredient>
+    <ingredient>
+      <quantity>100</quantity>
+      ml dry white wine
+    </ingredient>
+    <ingredient>
+      <quantity>200</quantity>
+      gr. canned crushed tomatoes
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      teaspoon salt
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      teaspoon fresh-ground black pepper
+    </ingredient>
+    <ingredient>
+      <quantity>1</quantity>
+      cup chopped fresh parsley
+    </ingredient>
+    <ingredient>
+      <quantity>100</quantity>
+      ml light cream
+    </ingredient>
+    <ingredient>
+      <quantity>150</quantity>
+      gr. rigatoni
+    </ingredient>
+    <ingredient>
+      <quantity>20</quantity>
+      gr. grated Parmesan, for serving
+    </ingredient>
+  </ingredientlist>
+
+  <preparation>
+    In a large frying pan, heat the oil over moderate heat. Add the sausage and cook, breaking up the meat with a fork, until it is no longer pink, about 5 minutes. With a slotted spoon, remove the sausage from the pan. Discard all but 1 tablespoon fat.
+    Reduce the heat to moderately low. Add the onion and garlic and cook, stirring occasionally, until the onion is translucent, about 5 minutes. Add the wine and cook until it almost evaporates, about 5 minutes. Stir in the sausage,tomatoes, and salt. Simmer, covered, for 10 minutes. Add the pepper, parsley, and cream.
+    In a large pot of boiling, salted water, cook the rigatoni until just done, about 14 minutes. Drain the pasta and toss with the sauce. Serve with grated Parmesan.
+  </preparation>
+
+</recipe>
