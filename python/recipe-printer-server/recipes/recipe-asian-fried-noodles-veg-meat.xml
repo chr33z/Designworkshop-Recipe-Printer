@@ -16,59 +16,54 @@
 
 		<author>Bienchen</author>
 
-		<yield>3 servings</yield>
+		<yield>1 servings</yield>
 
 		<preptime>20 minutes</preptime>
 	</recipeinfo>
 
 	<ingredientlist>
 		<ingredient>
-			<quantity>200</quantity>
-			<unit>gr.</unit>
-			<fooditem>asian noodles</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>4</quantity>
-			<unit>Tbsp.</unit>
-			<fooditem>oil</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>200</quantity>
-			<unit>gr.</unit>
-			<fooditem>pork meat</fooditem>
-		</ingredient>
-
-		<ingredient>
-			<quantity>1</quantity>
-			<fooditem>paprica</fooditem>
+			<quantity>75</quantity>
+			gr.	asian noodles
 		</ingredient>
 
 		<ingredient>
 			<quantity>2</quantity>
-			<fooditem>carrots</fooditem>
+			Tbsp. oil
+		</ingredient>
+
+		<ingredient>
+			<quantity>75</quantity>
+			gr.	pork meat
 		</ingredient>
 
 		<ingredient>
 			<quantity>1</quantity>
-			<unit>Tbsp.</unit>
-			<fooditem>vegetable stock</fooditem>
+			paprica
 		</ingredient>
 
 		<ingredient>
-			<quantity>2</quantity>
-			<unit>Tbsp.</unit>
-			<fooditem>soy sauce</fooditem>
+			<quantity>1</quantity>
+			carrots
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			vegetable stock cube
+		</ingredient>
+
+		<ingredient>
+			<quantity>1</quantity>
+			Tbsp. soy sauce
 		</ingredient>
 	</ingredientlist>
 
 	<preparation>
 		Die Nudeln im kochenden Salzwasser nach Packungsaufschrift gar kochen und abseihen.
-Das Fleisch in einer großen Pfanne mit Öl 3 Minuten braten. 
-Die Frühlingszwiebeln putzen, waschen und in 2 cm lange Stücke schneiden. Die Paprikaschote waschen, halbieren, entkernen und in Streifen schneiden. Die Karotten waschen, schälen und grob raspeln oder in dünne Scheiben schneiden.
-Das geschnittene Gemüse zum Fleisch in die Pfanne geben und 2 Minuten mitbraten.
-Brühe, Sojasoße und Stärkemehl in einer Schüssel gut mischen, nach dem Braten zu den übrigen Zutaten in die Pfanne geben und nochmals abschmecken.
-Das Öl in einer anderen Pfanne erhitzen, die abgetropften Nudeln dazugeben und ca. 3 Minuten braten. Danach die Gemüse-Fleischmischung zugeben und vermischen. 
+		Das Fleisch in einer großen Pfanne mit Öl 3 Minuten braten. 
+		Die Frühlingszwiebeln putzen, waschen und in 2 cm lange Stücke schneiden. Die Paprikaschote waschen, halbieren, entkernen und in Streifen schneiden. Die Karotten waschen, schälen und grob raspeln oder in dünne Scheiben schneiden.
+		Das geschnittene Gemüse zum Fleisch in die Pfanne geben und 2 Minuten mitbraten.
+		Brühe, Sojasoße und Stärkemehl in einer Schüssel gut mischen, nach dem Braten zu den übrigen Zutaten in die Pfanne geben und nochmals abschmecken.
+		Das Öl in einer anderen Pfanne erhitzen, die abgetropften Nudeln dazugeben und ca. 3 Minuten braten. Danach die Gemüse-Fleischmischung zugeben und vermischen. 
 	</preparation>
 </recipe>

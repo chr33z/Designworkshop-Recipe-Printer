@@ -16,55 +16,77 @@
   </recipeinfo>
 
   <ingredientlist>
-    <ingredient><quantity>1</quantity> <unit>tsp.</unit> <fooditem>butter or
-    oil</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      tsp. butter or oil 
+    </ingredient>
 
-    <ingredient><quantity>1</quantity> <fooditem>medium onion</fooditem>,
-    diced</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      medium onion, diced 
+    </ingredient>
 
-    <ingredient><quantity>2</quantity> <unit>cloves</unit>
-    <fooditem>garlic</fooditem>, minced</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      cloves garlic, minced 
+    </ingredient>
 
-    <ingredient><quantity>8</quantity> <unit>oz.</unit>
-    <fooditem>carrots</fooditem>, chopped</ingredient>
+    <ingredient>
+      <quantity>2</quantity> 
+      oz. carrots, chopped 
+    </ingredient>
 
-    <ingredient><quantity>1</quantity> <unit>lb.</unit> <fooditem>lamb stew
-    meat</fooditem>, cut into bite-sized pieces</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      lb. lamb stew meat, cut into bite-sized pieces 
+    </ingredient>
 
-    <ingredient><quantity>4</quantity> <fooditem>medium red
-    potatoes</fooditem></ingredient>
+    <ingredient>
+      <quantity>4</quantity> 
+      medium red potatoes 
+    </ingredient>
 
-    <ingredient><quantity>16</quantity> <unit>oz.</unit> <fooditem>beef
-    broth</fooditem></ingredient>
+    <ingredient>
+      <quantity>16</quantity> 
+      oz. beef broth 
+    </ingredient>
 
-    <ingredient><quantity>A small handful</quantity> of <fooditem>fresh
-    parsley</fooditem>, chopped</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      small handful of fresh parsley, chopped 
+    </ingredient>
 
-    <ingredient><quantity>A few sprigs</quantity> of <fooditem>fresh
-    thyme</fooditem></ingredient>
+    <ingredient>
+      <quantity>2</quantity> 
+      sprigs of fresh thyme 
+    </ingredient>
 
-    <ingredient><quantity>A few pinches</quantity> of <fooditem>fresh
-    chives</fooditem>, chopped</ingredient>
+    <ingredient>
+      <quantity>2</quantity> 
+      pinches of fresh chives, chopped 
+    </ingredient>
 
-    <ingredient><quantity>1</quantity> <unit>tsp.</unit>
-    <fooditem>cornstarch</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      tsp. cornstarch 
+    </ingredient>
 
-    <ingredient><quantity>1</quantity> <unit>tsp.</unit> cold
-    <fooditem>water</fooditem></ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      tsp. cold water 
+    </ingredient>
 
-    <ingredient><fooditem>Salt and pepper</fooditem> to taste</ingredient>
+    <ingredient>
+      <quantity>1</quantity> 
+      pinch of salt and pepper
+    </ingredient>
   </ingredientlist>
 
-  <preparation>Heat butter in a <equipment>3-quart saucepan</equipment>. Add
-  onion, garlic and carrots. Sweat vegetables over medium-low heat until onion
-  is nearly translucent. Add lamb and raise heat for a few minutes to brown
-  the meat slightly. Add broth and reduce heat to low. Add fresh parsley,
-  thyme and chives. Peel and cube potatoes while the pot is simmering. Cook
-  over low heat until potatoes are tender, about 30 minutes. Mix cornstarch
-  and water in a small bowl or cup and add to the stew. Raise the heat
-  momentarily so that the corn starch can thicken the stew. Add salt and
-  pepper to taste.</preparation>
-
+  <preparation>
+    Heat butter in a 3-quart saucepan. Add onion, garlic and carrots. Sweat vegetables over medium-low heat until onion is nearly translucent. Add lamb and raise heat for a few minutes to brown the meat slightly. Add broth and reduce heat to low. Add fresh parsley, thyme and chives. 
+    Peel and cube potatoes while the pot is simmering. Cook over low heat until potatoes are tender, about 30 minutes. 
+    Mix cornstarch and water in a small bowl or cup and add to the stew. Raise the heat momentarily so that the corn starch can thicken the stew. Add salt and pepper to taste.
+  </preparation>
   <serving>Serve with homemade bread.</serving>
 
   <notes>For a unique, Irish Pub flavor cut the amount of beef broth in half
