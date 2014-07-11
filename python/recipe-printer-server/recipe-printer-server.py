@@ -5,6 +5,7 @@ import time
 import math
 import random
 import glob
+import re
 from YUV import *
 from RGB import *
 from colormatcher import *
@@ -46,41 +47,64 @@ def findRecipe(tags):
         print("returning from findRecipe with None")
         return None
 
-def printRecipe(recipePath):
+def printRecipe(recipePath, peopleCount):
     recipeDOM = parse(recipePath)
 
     #print title
     title = recipeDOM.getElementsByTagName("title")[0].firstChild.nodeValue
 
-    printer.doubleHeightOn()
+    #printer.doubleHeightOn()
     print(title)
-    printer.doubleHeightOff()
-    printer.feed(1)
+    #printer.doubleHeightOff()
+    #printer.feed(1)
 
     #print blurb + author
     #blurb = recipeDOM.getElementsByTagName("blurb")[0].nodeValue
     author = recipeDOM.getElementsByTagName("author")[0].firstChild.nodeValue
 
     print("author" + author)
-    printer.feed(1)
+    #printer.feed(1)
 
-    printer.boldOn()
+    #printer.boldOn()
     print("Ingredients")
-    printer.boldOff()
+    #printer.boldOff()
 
+    # read ingredients, adjust quantity
     for ingredient in recipeDOM.getElementsByTagName("ingredient"):
-        print(ingredient.firstChild.nodeValue)
+        quantity = 0
+        
+        for child in ingredient.childNodes:
+            if child != None and child.firstChild != None:
+                if child.nodeName == 'quantity':
+                    quantity = child.firstChild.nodeValue
+                else:
+                    print(child.localName)
 
-    printer.feed(1)
-    printer.boldOn()
-    print("Preparation")
-    printer.boldOff()
+
+        #ingredientStr = ingredient.nodeValue;
+        #print(ingredientStr)
+        
+        #if quantityNode != None and len(quantityNode) > 0:
+            #quantity = quantityNode[0].firstChild.nodeValue
+            
+        # substitude quantity with adjusted quantity
+        #re.sub('<quantity.*quantity>',
+               #str(quantity * (peopleCount if peopleCount != 0 else 1)), ingredientStr)
+        # remove other tags from string
+        #re.sub('<[^>]+>', '', ingredientStr)
+        
+        #print(ingredientStr.toString())
+
+    #printer.feed(1)
+    #printer.boldOn()
+    #print("Preparation")
+    #printer.boldOff()
 
     print(recipeDOM.getElementsByTagName('preparation')[0].firstChild.nodeValue)
     
 #init
-printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
-bus = smbus.SMBus(1)
+#printer = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
+#bus = smbus.SMBus(1)
 
 # I2C address 0x29
 # Register 0x12 has device ver. 
@@ -88,9 +112,9 @@ bus = smbus.SMBus(1)
 
 
 # UNCOMMENT NEXT TWO LINES FOR SERIAL ACCESS
-bus.write_byte(0x29,0x80|0x12)
-ver = bus.read_byte(0x29)
-#ver = 0x55;
+#bus.write_byte(0x29,0x80|0x12)
+#ver = bus.read_byte(0x29)
+ver = 0x55;
 #version # should be 0x44
 
 if ver == 0x44:
@@ -149,11 +173,13 @@ if ver == 0x44:
                 # select random recipe from list
                 recipeToPrint = random.choice(matchingRecipes)
                 # print recipe here
-                printRecipe(recipeToPrint)
+                printRecipe(recipeToPrint, peopleCount)
 
         time.sleep(0.05)
 
-# elif ver == 0x55:
+elif ver == 0x55:
+    printRecipe('recipes/recipe-asian-fried-noodles-veg-meat.xml', 1)
+    
 #     #for testing the color things
 #     rgb1 = RGB.fromFloat(0.1, 1.0, 0.5)
 #     print(rgb1.toString())
